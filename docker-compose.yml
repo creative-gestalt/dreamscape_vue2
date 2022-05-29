@@ -4,27 +4,19 @@ services:
     build: ./dreamscape_front
     container_name: dreamscape_front
     working_dir: /dreamscape_front
-    links:
-      - dreamscape_back
     ports:
       - "8081:8080"
     command: serve -s dist -l 8080
     restart: unless-stopped
-    networks:
-      - proxynet
 
   dreamscape_front2:
     build: ./dreamscape_front
     container_name: dreamscape_front2
     working_dir: /dreamscape_front
-    links:
-      - dreamscape_back
     ports:
       - "8000:8080"
     command: serve -s dist -l 8080
     restart: unless-stopped
-    networks:
-      - proxynet
 
   dreamscape_back:
     build: ./dreamscape_back
@@ -34,9 +26,3 @@ services:
       - "3001:3000"
     command: node dist/main
     restart: unless-stopped
-    networks:
-      - proxynet
-
-networks:
-  proxynet:
-    name: home_net2
