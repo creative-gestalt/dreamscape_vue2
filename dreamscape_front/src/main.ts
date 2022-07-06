@@ -25,6 +25,8 @@ Vue.filter(
   }
 );
 
+window.navigator.standalone;
+
 new Vue({
   router,
   store,
