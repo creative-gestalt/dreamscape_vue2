@@ -6,8 +6,7 @@ Vue.use(VueRouter);
 
 const routes: Array<RouteConfig> = [
   {
-    path: "/",
-    redirect: "/dreams",
+    path: "/"
   },
   {
     path: "/dreams",
