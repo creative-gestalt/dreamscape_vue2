@@ -25,10 +25,6 @@ Vue.filter(
   }
 );
 
-window.matchMedia(
-    '(display-mode: standalone)'
-).matches
-
 new Vue({
   router,
   store,
