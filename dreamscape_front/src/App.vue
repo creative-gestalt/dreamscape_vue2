@@ -1,12 +1,25 @@
 <template>
   <v-app id="app" :style="{ background: getColors.backgroundColor }">
-    <v-app-bar :color="getColors.topBarColor" dense dark app>
+    <v-app-bar
+      :color="getColors.topBarColor"
+      :height="fullscreenBuffer"
+      dark
+      app
+    >
       <div class="d-flex align-center pr-5">
-        <v-img class="ml-3" width="35" src="@/assets/ga-logo-black.png"></v-img>
+        <v-img
+          class="ml-3"
+          :style="isIOS ? 'transform: translateY(10px)' : ''"
+          width="35"
+          src="@/assets/ga-logo-black.png"
+        ></v-img>
       </div>
       <v-app-bar-title
         class="text-no-wrap"
-        :style="{ color: getColors.iconColor }"
+        :style="{
+          color: getColors.iconColor,
+          transform: isIOS ? 'translateY(10px)' : '',
+        }"
       >
         {{ $route.meta.title }}
       </v-app-bar-title>
@@ -37,6 +50,7 @@
       v-if="isMobile"
       :background-color="getColors.topBarColor"
       color="transparent"
+      :min-height="fullscreenBuffer"
       grow
       shift
       light
@@ -83,11 +97,6 @@ export default Vue.extend({
     await this.$store.dispatch("getAllDreams");
     await this.$store.dispatch("getDreamDates");
     await this.$store.dispatch("getAllSessions");
-    // if (navigator.userAgent.toLowerCase().indexOf("iphone") > -1) {
-    //   this.bottomNavHeight = 85;
-    //   this.paddingClass = "pb-8";
-    //   this.marginClass = "mt-n3";
-    // }
   },
   data: () => ({
     bottomNavHeight: 56,
@@ -102,12 +111,19 @@ export default Vue.extend({
     isMobile(): boolean {
       return this.$vuetify.breakpoint.name === "xs";
     },
+    isIOS(): boolean {
+      return this.fullscreenBuffer === 80;
+    },
+    fullscreenBuffer(): number {
+      return navigator.platform.match(/iPhone|iPod|iPad/) ? 80 : 80;
+    },
   },
 });
 </script>
 <style lang="scss">
 $scrollbar-bg-color: #171717;
 $scrollbar-thumb-color: #898989;
+$app-title-bar-width: 125px;
 
 html {
   background-color: black;
@@ -120,5 +136,8 @@ html {
 ::-webkit-scrollbar-thumb {
   border-radius: 50px;
   background-color: $scrollbar-thumb-color;
+}
+.v-app-bar-title__content {
+  width: $app-title-bar-width !important;
 }
 </style>
