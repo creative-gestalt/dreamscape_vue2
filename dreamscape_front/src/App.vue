@@ -2,7 +2,7 @@
   <v-app id="app" :style="{ background: getColors.backgroundColor }">
     <v-app-bar
       :color="getColors.topBarColor"
-      :height="fullscreenBuffer"
+      :height="isIOS ? 90 : 56"
       dark
       app
     >
