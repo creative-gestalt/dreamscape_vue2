@@ -9,7 +9,7 @@
       <div class="d-flex align-center pr-5">
         <v-img
           class="ml-3"
-          :style="isIOS ? 'transform: translateY(10px)' : ''"
+          :style="isIOS ? 'transform: translateY(20px)' : ''"
           width="35"
           src="@/assets/ga-logo-black.png"
         ></v-img>
@@ -18,7 +18,7 @@
         class="text-no-wrap"
         :style="{
           color: getColors.iconColor,
-          transform: isIOS ? 'translateY(10px)' : '',
+          transform: isIOS ? 'translateY(20px)' : '',
         }"
       >
         {{ $route.meta.title }}
@@ -112,6 +112,7 @@ export default Vue.extend({
       return this.$vuetify.breakpoint.name === "xs";
     },
     isIOS(): boolean {
+      // return true;
       return this.fullscreenBuffer === 80;
     },
     fullscreenBuffer(): number {
