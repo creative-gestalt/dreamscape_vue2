@@ -115,7 +115,7 @@ export default Vue.extend({
       return this.fullscreenBuffer === 80;
     },
     fullscreenBuffer(): number {
-      return navigator.platform.match(/iPhone|iPod|iPad/) ? 80 : 80;
+      return navigator.platform.match(/iPhone|iPod|iPad/) ? 80 : 56;
     },
   },
 });
