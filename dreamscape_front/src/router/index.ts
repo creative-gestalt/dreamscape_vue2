@@ -7,10 +7,10 @@ Vue.use(VueRouter);
 const routes: Array<RouteConfig> = [
   {
     path: "/",
-    redirect: "/dreams",
+    redirect: "/ds",
   },
   {
-    path: "/dreams",
+    path: "/ds",
     name: "DreamsPage",
     component: DreamsPage,
     meta: {
@@ -18,7 +18,7 @@ const routes: Array<RouteConfig> = [
     },
   },
   {
-    path: "/sessions",
+    path: "/ds/sessions",
     name: "SessionPage",
     component: () =>
       import(/* webpackChunkName: "sessions" */ "../views/SessionsPage.vue"),
@@ -27,7 +27,7 @@ const routes: Array<RouteConfig> = [
     },
   },
   {
-    path: "/dream/:id",
+    path: "/ds/dream/:id",
     name: "ViewDreamPage",
     component: () =>
       import(/* webpackChunkName: "view-dream" */ "../views/ViewDreamPage.vue"),
@@ -36,7 +36,7 @@ const routes: Array<RouteConfig> = [
     },
   },
   {
-    path: "/session/:id",
+    path: "/ds/session/:id",
     name: "ViewSessionPage",
     component: () =>
       import(
@@ -47,7 +47,7 @@ const routes: Array<RouteConfig> = [
     },
   },
   {
-    path: "/dream-overview",
+    path: "/ds/dream-overview",
     name: "DreamOverviewPage",
     component: () =>
       import(
@@ -58,7 +58,7 @@ const routes: Array<RouteConfig> = [
     },
   },
   {
-    path: "/settings",
+    path: "/ds/settings",
     name: "SettingsPage",
     component: () =>
       import(/* webpackChunkName: "settings" */ "../views/SettingsPage.vue"),
