@@ -14,16 +14,16 @@
       <v-spacer></v-spacer>
 
       <div v-if="!isMobile">
-        <v-btn to="/dreams" text>
+        <v-btn to="/ds" text>
           <v-icon :color="getColors.iconColor"> mdi-sleep </v-icon>
         </v-btn>
-        <v-btn to="/sessions" text>
+        <v-btn to="/ds/sessions" text>
           <v-icon :color="getColors.iconColor"> mdi-notebook </v-icon>
         </v-btn>
-        <v-btn to="/dream-overview" text>
+        <v-btn to="/ds/dream-overview" text>
           <v-icon :color="getColors.iconColor">mdi-calendar</v-icon>
         </v-btn>
-        <v-btn to="/settings" text>
+        <v-btn to="/ds/settings" text>
           <v-icon :color="getColors.iconColor"> mdi-cog-outline </v-icon>
         </v-btn>
       </div>
@@ -42,25 +42,25 @@
       light
       app
     >
-      <v-btn :class="paddingClass" to="/dreams">
+      <v-btn :class="paddingClass" to="/ds">
         <span :class="marginClass" :style="{ color: getColors.iconColor }">
           Dreams
         </span>
         <v-icon :color="getColors.iconColor">mdi-sleep</v-icon>
       </v-btn>
-      <v-btn :class="paddingClass" to="/sessions">
+      <v-btn :class="paddingClass" to="/ds/sessions">
         <span :class="marginClass" :style="{ color: getColors.iconColor }">
           Sessions
         </span>
         <v-icon :color="getColors.iconColor"> mdi-notebook </v-icon>
       </v-btn>
-      <v-btn :class="paddingClass" to="/dream-overview">
+      <v-btn :class="paddingClass" to="/ds/dream-overview">
         <span :class="marginClass" :style="{ color: getColors.iconColor }">
           Overview
         </span>
         <v-icon :color="getColors.iconColor"> mdi-calendar </v-icon>
       </v-btn>
-      <v-btn :class="paddingClass" to="/settings">
+      <v-btn :class="paddingClass" to="/ds/settings">
         <span :class="marginClass" :style="{ color: getColors.iconColor }">
           Settings
         </span>
