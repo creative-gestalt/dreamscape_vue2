@@ -224,13 +224,15 @@ export default Vue.extend({
       // @ts-ignore
       this.$refs.menu.save(date);
     },
-    addDream(dreamText: string): void {
+    addDream(dreamText: string, refocus: true): void {
       if (dreamText) {
         this.dreams.push({ subDream: dreamText, time: this.time });
         this.dream = "";
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore
-        this.$refs.dreamInput.$refs.input.focus();
+        if (refocus) {
+          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+          // @ts-ignore
+          this.$refs.dreamInput.$refs.input.focus();
+        }
       } else {
         this.snackText = "Dream cannot be empty";
         this.snackbar = true;
@@ -253,7 +255,7 @@ export default Vue.extend({
       }
     },
     async completeDream(): Promise<void> {
-      if (this.dream.length > 0) this.addDream(this.dream);
+      if (this.dream.length > 0) this.addDream(this.dream, false);
       if (this.date && this.dreams.length > 0) {
         await this.$store.dispatch("addDream", {
           date: this.date + this.getDate().slice(10, 19),
