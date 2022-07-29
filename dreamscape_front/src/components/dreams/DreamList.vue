@@ -1,11 +1,6 @@
 <template>
-  <v-card
-    v-if="getDreams && getDreams.length > 0"
-    class="ma-2 ma-auto"
-    max-width="800"
-    :color="getColors.topBarColor"
-  >
-    <v-card-title>
+  <v-card class="ma-2 ma-auto" max-width="800" :color="getColors.topBarColor">
+    <v-card-title class="ma-0 pa-1 pb-0">
       <v-text-field
         v-model="search"
         append-icon="mdi-magnify"
@@ -13,43 +8,55 @@
         single-line
         hide-details
         clearable
+        outlined
         dense
       ></v-text-field>
+      <v-select
+        v-model="itemsPerPage"
+        :items="perPage"
+        class="ml-1"
+        style="max-width: 75px"
+        hide-details
+        outlined
+        dense
+      >
+      </v-select>
     </v-card-title>
     <v-data-table
       :items="getDreams"
       :headers="headers"
-      :search="search"
       :items-per-page="itemsPerPage"
       :style="{ backgroundColor: getColors.topBarColor }"
       item-key="_id"
       mobile-breakpoint="0"
+      hide-default-header
       hide-default-footer
       @click:row="handleClick"
-      calculate-widths
       dense
     >
-      <template v-slot:expanded-item="{ headers, item }">
-        <td :colspan="headers.length">{{ item.dreams[0].subDream }}</td>
-      </template>
       <template v-slot:item.date="{ item }">
-        <small
-          class="text-no-wrap"
-          :style="getColors.textColor | alpha('70%', true, 'color')"
-        >
-          {{ formatDreamDate(item.date) }}
-        </small>
-      </template>
-      <template v-slot:item.dreams="{ item }">
         <div :style="getColors.textColor | alpha('70%', true, 'color')">
-          <div>
-            {{ truncate(item.dreams[0].subDream, 50) }}
-          </div>
-        </div>
-      </template>
-      <template v-slot:item.count="{ item }">
-        <div :style="getColors.textColor | alpha('90%', true, 'color')">
-          {{ item.dreams.length }}
+          <v-list-item link dense>
+            <v-list-item-avatar class="ml-n6 mr-1">
+              <span :style="getColors.textColor | alpha('90%', true, 'color')">
+                {{ item.dreams.length }}
+              </span>
+            </v-list-item-avatar>
+            <v-list-item-content>
+              <v-list-item-title>
+                <span
+                  :style="getColors.textColor | alpha('90%', true, 'color')"
+                >
+                  {{ formatDreamDate(item.date) }}
+                </span>
+              </v-list-item-title>
+              <v-list-item-subtitle>
+                <span class="grey--text">
+                  {{ item.dreams[0].subDream }}
+                </span>
+              </v-list-item-subtitle>
+            </v-list-item-content>
+          </v-list-item>
         </div>
       </template>
     </v-data-table>
@@ -61,13 +68,6 @@
     >
     </v-pagination>
   </v-card>
-  <v-container v-else>
-    <v-card :color="getColors.topBarColor">
-      <v-card-title :style="{ color: getColors.textColor }">
-        No Dreams Here Yet
-      </v-card-title>
-    </v-card>
-  </v-container>
 </template>
 
 <script lang="ts">
@@ -81,16 +81,14 @@ export default Vue.extend({
   async created() {
     if (this.getDreamsCount === 0) {
       await this.getDreamsForPage(1);
-      await this.updatePageCount(true);
-    } else {
-      await this.updatePageCount();
     }
   },
   data: () => ({
     search: "",
     currentPage: 1,
     pagesFromServer: 0,
-    itemsPerPage: 13,
+    itemsPerPage: 8,
+    perPage: [8, 10, 15, 20],
     pageLoaded: 0,
     moreAvailable: true,
     dreams: [] as Dream[],
@@ -100,18 +98,7 @@ export default Vue.extend({
         align: "start",
         sortable: true,
         value: "date",
-      },
-      {
-        text: "Dream",
-        align: "start",
-        sortable: true,
-        value: "dreams",
-      },
-      {
-        text: "Per Night",
-        align: "end",
-        sortable: true,
-        value: "count",
+        width: "90%",
       },
     ],
   }),
@@ -126,14 +113,6 @@ export default Vue.extend({
       });
       await this.$store.dispatch("updateLoading", false);
     },
-    async updatePageCount(get = false): Promise<void> {
-      await this.$store.dispatch("updateLoading", true);
-      if (get) await this.$store.dispatch("getDreamsCount");
-      this.pagesFromServer = Math.ceil(
-        (await this.$store.getters.getDreamsCount) / this.itemsPerPage
-      );
-      await this.$store.dispatch("updateLoading", false);
-    },
     handleClick(dream: Dream): void {
       this.$router.push(`/dream/${dream._id}`);
     },
@@ -144,15 +123,29 @@ export default Vue.extend({
         year: "numeric",
       });
     },
-    truncate(value: string, count: number): string {
-      return truncate(value, count);
-    },
   },
   computed: {
     ...mapGetters(["getColors", "getDreams", "getDreamsCount"]),
     compPages(): number {
-      return this.pagesFromServer;
+      return Math.ceil(this.$store.getters.getDreamsCount / this.itemsPerPage);
+    },
+  },
+  watch: {
+    search(value: string): void {
+      if (value) {
+        this.$store.dispatch("searchDreams", value);
+      } else {
+        this.getDreamsForPage(1);
+      }
     },
   },
 });
 </script>
+<style lang="scss">
+.text-start {
+  max-width: 5px;
+}
+.v-pagination__item {
+  opacity: 0.6;
+}
+</style>

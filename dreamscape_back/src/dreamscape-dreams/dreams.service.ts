@@ -41,6 +41,34 @@ export class DreamsService {
     return await this.getModel(user).findById(dreamID).exec();
   }
 
+  async searchDreams(user, target): Promise<Dream[]> {
+    return await this.getModel(user)
+      .find({
+        $or: [
+          {
+            dreams: {
+              $elemMatch: {
+                subDream: {
+                  $regex: `.*${target}.*`,
+                  $options: 'i',
+                },
+              },
+            },
+          },
+          {
+            keywords: {
+              $elemMatch: {
+                $regex: `.*${target}.*`,
+                $options: 'i',
+              },
+            },
+          },
+        ],
+      })
+      .sort({ date: 'desc' })
+      .exec();
+  }
+
   async addDream(
     user,
     addDreamDto: AddDreamDto,

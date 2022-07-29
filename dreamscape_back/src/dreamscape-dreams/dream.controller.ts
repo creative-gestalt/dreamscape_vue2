@@ -50,6 +50,17 @@ export class DreamController {
     return res.status(HttpStatus.OK).json(dream);
   }
 
+  @Get('searchDreams')
+  async searchDreams(
+    @Res() res,
+    @Query('target') target,
+    @Headers('requested-from') user,
+  ) {
+    const search = await this.dreamsService.searchDreams(user, target);
+    const response = { count: search.length, dreams: search };
+    return res.status(HttpStatus.OK).json(response);
+  }
+
   @Get('getDreamDates')
   async getDreamDates(@Res() res, @Headers('requested-from') user) {
     const dreams = await this.dreamsService.getAllDreams(user);

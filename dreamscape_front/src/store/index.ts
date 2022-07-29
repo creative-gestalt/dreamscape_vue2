@@ -11,7 +11,7 @@ import { sleep } from "@/utils/constants";
 Vue.use(Vuex);
 
 const url = "http://192.168.1.250:3001";
-// const url = "http://localhost:3001";
+// const url = "http://localhost:3000";
 
 let user = "";
 if (window.location.port === "8081") user = "nick";
@@ -110,6 +110,14 @@ export default new Vuex.Store({
       return await axios
         .get(`${url}/getDream/${payload._id}`)
         .then((result) => result.data);
+    },
+    async searchDreams({ commit }, payload: string): Promise<void> {
+      await axios
+        .get(`${url}/searchDreams?target=${payload}`)
+        .then((result) => {
+          commit("SET_DREAMS_COUNT", result.data.count);
+          commit("SET_DREAMS", result.data.dreams);
+        });
     },
     async addDream({ commit }, payload: Dream): Promise<void> {
       await axios.post(`${url}/addDream`, payload);
