@@ -20,6 +20,13 @@ import { ValidateObjectId } from '../shared/pipes/validate-object-id.pipes';
 export class DreamController {
   constructor(private readonly dreamsService: DreamsService) {}
 
+  @Get('getDreamsCount')
+  async getDreamsCount(@Res() res, @Headers('requested-from') user) {
+    const dreams = await this.dreamsService.getAllDreams(user);
+    const count = dreams.length;
+    return res.status(HttpStatus.OK).json(count);
+  }
+
   @Get('getDreams/:params')
   async getDreams(
     @Res() res,
