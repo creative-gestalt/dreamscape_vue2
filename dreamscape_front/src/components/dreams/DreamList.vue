@@ -81,6 +81,7 @@ export default Vue.extend({
   async created() {
     if (this.getDreamsCount === 0) {
       await this.getDreamsForPage(1);
+      await this.$store.dispatch("getDreamsCount");
     }
   },
   data: () => ({
