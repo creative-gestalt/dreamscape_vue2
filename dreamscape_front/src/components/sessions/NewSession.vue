@@ -260,6 +260,7 @@ export default Vue.extend({
       // });
     },
     async completeSession(): Promise<void> {
+      await this.$store.dispatch("updateLoading", true);
       if (
         this.entity.length > 0 &&
         this.question.length > 0 &&
@@ -281,6 +282,7 @@ export default Vue.extend({
       } else {
         this.snackText = "No sessions to submit";
       }
+      await this.$store.dispatch("updateLoading", false);
       this.snackbar = true;
     },
   },

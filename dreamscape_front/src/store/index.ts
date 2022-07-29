@@ -1,11 +1,12 @@
 import Vue from "vue";
 import Vuex from "vuex";
-import { State } from "@/interfaces/state.interface";
+import { Pagination, State } from "@/interfaces/state.interface";
 import { Dream } from "@/interfaces/dream.interface";
 import { Colors, Settings } from "@/interfaces/settings.interface";
 import { Session } from "@/interfaces/session.interface";
 import createPersistedState from "vuex-persistedstate";
 import axios from "axios";
+import { sleep } from "@/utils/constants";
 
 Vue.use(Vuex);
 
@@ -22,6 +23,7 @@ axios.defaults.headers.common = {
 const initialState = () => ({
   limit: 40,
   dreams: [] as Dream[],
+  dreamsCount: 0,
   dates: [] as string[],
   sessions: [] as Session[],
   settings: {
@@ -33,6 +35,8 @@ const initialState = () => ({
       completeBtnColor: "#007707",
     },
   } as Settings,
+  loading: false,
+  currentTab: 0,
 });
 
 export default new Vuex.Store({
@@ -54,10 +58,8 @@ export default new Vuex.Store({
     SET_DREAMS(state: State, payload: Dream[]): void {
       state.dreams = payload;
     },
-    LOAD_MORE_DREAMS(state: State, payload: Dream[]): void {
-      for (let i = 0, n = payload.length; i < n; i++) {
-        state.dreams.push(payload[i]);
-      }
+    SET_DREAMS_COUNT(state: State, payload: number): void {
+      state.dreamsCount = payload;
     },
     ADD_DREAM(state: State, payload: Dream): void {
       state.dreams.push(payload);
@@ -81,6 +83,12 @@ export default new Vuex.Store({
     SET_SETTINGS(state: State, payload: Settings): void {
       if (payload) state.settings = payload;
     },
+    UPDATE_LOADING(state: State, payload: boolean): void {
+      state.loading = payload;
+    },
+    UPDATE_CURRENT_TAB(state: State, payload: number): void {
+      state.currentTab = payload;
+    },
   },
   actions: {
     async reset({ commit, state }, payload: Settings): Promise<void> {
@@ -88,18 +96,15 @@ export default new Vuex.Store({
       await axios.put(`${url}/updateSettings/${payload._id}`, state.settings);
     },
     // Dreams requests
-    async getAllDreams({ commit, state }): Promise<void> {
+    async getDreamsCount({ commit }, payload: Pagination): Promise<void> {
       await axios
-        .get(`${url}/getDreams/0-${state.limit}`)
-        .then((data) => commit("SET_DREAMS", data.data));
+        .get(`${url}/getDreamsCount`)
+        .then((data) => commit("SET_DREAMS_COUNT", data.data));
     },
-    async loadMoreDreams(
-      { commit },
-      payload: Record<string, string>
-    ): Promise<void> {
+    async getDreamsForPage({ commit }, payload: Pagination): Promise<void> {
       await axios
         .get(`${url}/getDreams/${payload.skip}-${payload.limit}`)
-        .then((data) => commit("LOAD_MORE_DREAMS", data.data));
+        .then((data) => commit("SET_DREAMS", data.data));
     },
     async getDream({ commit }, payload: Dream): Promise<void> {
       return await axios
@@ -173,10 +178,21 @@ export default new Vuex.Store({
         commit("SET_SETTINGS", settings);
       }
     },
+    async updateLoading({ commit }, payload: boolean): Promise<void> {
+      if (payload) {
+        commit("UPDATE_LOADING", payload);
+      } else {
+        await sleep(750);
+        commit("UPDATE_LOADING", payload);
+      }
+    },
+    async updateCurrentTab({ commit }, payload: number): Promise<void> {
+      commit("UPDATE_CURRENT_TAB", payload);
+    },
   },
   getters: {
     getDreams: (state: State): Dream[] => state.dreams,
-    getDreamCount: (state: State): number => state.dreams.length,
+    getDreamsCount: (state: State): number => state.dreamsCount,
     getSessions: (state: State): Session[] => state.sessions,
     getSettings: (state: State): Settings => state.settings,
     getColors: (state: State): Colors => state.settings.colors,
@@ -194,6 +210,8 @@ export default new Vuex.Store({
         .reverse();
     },
     getDreamDates: (state: State): string[] => state.dates,
+    loading: (state: State): boolean => state.loading,
+    getCurrentTab: (state: State): number => state.currentTab,
   },
   modules: {},
   plugins: [

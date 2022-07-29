@@ -43,6 +43,9 @@
     </v-app-bar>
 
     <v-main>
+      <v-overlay v-if="loading" class="ma-auto ios-overlay">
+        <v-progress-circular size="45" indeterminate></v-progress-circular>
+      </v-overlay>
       <router-view />
     </v-main>
 
@@ -94,7 +97,10 @@ export default Vue.extend({
     await this.$store.dispatch("getSettings");
   },
   async created(): Promise<void> {
-    await this.$store.dispatch("getAllDreams");
+    await this.$store.dispatch("getDreamsForPage", {
+      skip: 0,
+      limit: 13,
+    });
     await this.$store.dispatch("getDreamDates");
     await this.$store.dispatch("getAllSessions");
   },
@@ -107,7 +113,7 @@ export default Vue.extend({
     //
   },
   computed: {
-    ...mapGetters(["getColors"]),
+    ...mapGetters(["getColors", "loading"]),
     isMobile(): boolean {
       return this.$vuetify.breakpoint.name === "xs";
     },
@@ -140,5 +146,10 @@ html {
 }
 .v-app-bar-title__content {
   width: $app-title-bar-width !important;
+}
+.ios-overlay {
+  height: 125px;
+  width: 125px;
+  border-radius: 15px !important;
 }
 </style>

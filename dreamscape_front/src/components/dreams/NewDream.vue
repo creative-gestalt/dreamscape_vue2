@@ -224,7 +224,7 @@ export default Vue.extend({
       // @ts-ignore
       this.$refs.menu.save(date);
     },
-    addDream(dreamText: string, refocus: true): void {
+    addDream(dreamText: string, refocus = true): void {
       if (dreamText) {
         this.dreams.push({ subDream: dreamText, time: this.time });
         this.dream = "";
@@ -255,6 +255,7 @@ export default Vue.extend({
       }
     },
     async completeDream(): Promise<void> {
+      await this.$store.dispatch("updateLoading", true);
       if (this.dream.length > 0) this.addDream(this.dream, false);
       if (this.date && this.dreams.length > 0) {
         await this.$store.dispatch("addDream", {
@@ -267,7 +268,10 @@ export default Vue.extend({
               ? [this.keywords]
               : [],
         });
-        await this.$store.dispatch("getAllDreams");
+        await this.$store.dispatch("getDreamsForPage", {
+          skip: 0,
+          limit: 13,
+        });
         this.dream = "";
         this.dreams = [] as SubDream[];
         this.keywords = "";
@@ -276,6 +280,7 @@ export default Vue.extend({
       } else {
         this.snackText = "No dreams to submit";
       }
+      await this.$store.dispatch("updateLoading", false);
       this.snackbar = true;
     },
   },

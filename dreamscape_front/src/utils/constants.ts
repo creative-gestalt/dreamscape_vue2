@@ -1,3 +1,9 @@
+export const truncate = (text: string, stop: number, clamp = "..."): string =>
+  text.slice(0, stop) + (stop < text.length ? clamp || "..." : "");
+
+export const sleep = (ms: number): Promise<void> =>
+  new Promise((resolve) => setTimeout(resolve, ms));
+
 export const alphaToHex: Record<string, string> = {
   "100%": "FF",
   "99%": "FC",

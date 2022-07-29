@@ -300,11 +300,17 @@ export default Vue.extend({
         dreams: this.dream.dreams,
         keywords: this.dream.keywords.length > 0 ? this.dream.keywords : [],
       });
-      await this.$store.dispatch("getAllDreams");
+      await this.$store.dispatch("getDreamsForPage", {
+        skip: 0,
+        limit: 13,
+      });
     },
     async deleteDream(): Promise<void> {
       await this.$store.dispatch("deleteDreams", this.dream);
-      await this.$store.dispatch("getAllDreams");
+      await this.$store.dispatch("getDreamsForPage", {
+        skip: 0,
+        limit: 13,
+      });
       await this.$router.push("/dreams");
     },
   },
