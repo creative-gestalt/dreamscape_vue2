@@ -22,11 +22,16 @@
       :search="search"
       :items-per-page="itemsPerPage"
       :style="{ backgroundColor: getColors.topBarColor }"
+      item-key="_id"
       mobile-breakpoint="0"
       hide-default-footer
       @click:row="handleClick"
+      calculate-widths
       dense
     >
+      <template v-slot:expanded-item="{ headers, item }">
+        <td :colspan="headers.length">{{ item.dreams[0].subDream }}</td>
+      </template>
       <template v-slot:item.date="{ item }">
         <small
           class="text-no-wrap"
@@ -37,8 +42,8 @@
       </template>
       <template v-slot:item.dreams="{ item }">
         <div :style="getColors.textColor | alpha('70%', true, 'color')">
-          <div class="text-truncate" style="max-width: 50vw">
-            {{ item.dreams[0].subDream }}
+          <div>
+            {{ truncate(item.dreams[0].subDream, 50) }}
           </div>
         </div>
       </template>
@@ -69,6 +74,7 @@
 import Vue from "vue";
 import { Dream } from "@/interfaces/dream.interface";
 import { mapGetters } from "vuex";
+import { truncate } from "@/utils/constants";
 
 export default Vue.extend({
   name: "DreamList",
@@ -137,6 +143,9 @@ export default Vue.extend({
         day: "numeric",
         year: "numeric",
       });
+    },
+    truncate(value: string, count: number): string {
+      return truncate(value, count);
     },
   },
   computed: {
