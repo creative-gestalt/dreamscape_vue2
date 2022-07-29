@@ -25,7 +25,7 @@
     <v-data-table
       :items="getDreams"
       :headers="headers"
-      :items-per-page="itemsPerPage"
+      :items-per-page.sync="compItemsPerPage"
       :style="{ backgroundColor: getColors.topBarColor }"
       item-key="_id"
       mobile-breakpoint="0"
@@ -97,9 +97,8 @@ export default Vue.extend({
       {
         text: "Date",
         align: "start",
-        sortable: true,
+        sortable: false,
         value: "date",
-        width: "90%",
       },
     ],
   }),
@@ -127,6 +126,14 @@ export default Vue.extend({
   },
   computed: {
     ...mapGetters(["getColors", "getDreams", "getDreamsCount"]),
+    compItemsPerPage: {
+      get(): number {
+        return this.itemsPerPage;
+      },
+      set(): void {
+        this.getDreamsForPage(this.currentPage);
+      },
+    },
     compPages(): number {
       return Math.ceil(this.$store.getters.getDreamsCount / this.itemsPerPage);
     },
