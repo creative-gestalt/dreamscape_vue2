@@ -5,6 +5,7 @@
         v-model="search"
         append-icon="mdi-magnify"
         label="Search"
+        @click:clear="getDreamsForPage(1)"
         single-line
         hide-details
         clearable
