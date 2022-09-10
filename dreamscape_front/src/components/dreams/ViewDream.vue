@@ -1,9 +1,9 @@
 <template>
   <v-container>
     <v-btn
-      v-if="edit"
+      v-if="!edit"
       @click="addSubDream"
-      class="mb-14"
+      :style="{ marginBottom: isIOS ? '80px' : '50px' }"
       :color="getColors.completeBtnColor"
       light
       fixed
@@ -314,6 +314,13 @@ export default Vue.extend({
   },
   computed: {
     ...mapGetters(["getDate", "getColors"]),
+    isIOS(): boolean {
+      // return true;
+      return this.fullscreenBuffer === 80;
+    },
+    fullscreenBuffer(): number {
+      return navigator.platform.match(/iPhone|iPod|iPad/) ? 80 : 56;
+    },
     computedDate(): string {
       return this.dream.date
         ? new Date(this.dream.date + this.dreamTime).toLocaleString("en-US", {
