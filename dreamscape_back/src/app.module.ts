@@ -4,8 +4,8 @@ import { DreamsModule } from './dreamscape-dreams/dreams.module';
 import { SessionsModule } from './dreamscape-sessions/sessions.module';
 import { SettingsModule } from './dreamscape-settings/settings.module';
 
+const url = '192.168.1.250'; // production
 // const url = 'localhost';
-const url = '192.168.1.250';
 
 @Module({
   imports: [

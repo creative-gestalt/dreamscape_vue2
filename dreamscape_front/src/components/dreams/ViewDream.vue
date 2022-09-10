@@ -1,9 +1,26 @@
 <template>
   <v-container>
-    <v-card class="ma-auto" :color="getColors.topBarColor" max-width="800">
+    <v-btn
+      v-if="edit"
+      @click="addSubDream"
+      class="mb-14"
+      :color="getColors.completeBtnColor"
+      light
+      fixed
+      right
+      bottom
+      fab
+    >
+      +
+    </v-btn>
+    <v-card
+      class="ma-auto mb-16"
+      :color="getColors.topBarColor"
+      max-width="800"
+    >
       <v-container class="pb-0 mb-n2">
         <v-row align="center" justify="center" no-gutters>
-          <v-col cols="10">
+          <v-col cols="9">
             <v-menu
               ref="menu"
               v-model="menu"
@@ -33,36 +50,29 @@
               ></v-date-picker>
             </v-menu>
           </v-col>
-          <v-col cols="2" class="d-flex justify-center">
-            <v-fab-transition>
-              <v-icon v-if="edit" @click="edit = false" color="orange">
-                mdi-window-close
-              </v-icon>
-              <v-menu v-else min-width="175" offset-x left>
-                <template v-slot:activator="{ on, attrs }">
-                  <v-icon
-                    :color="getColors.iconColor"
-                    dark
-                    v-bind="attrs"
-                    v-on="on"
-                  >
-                    mdi-menu
-                  </v-icon>
-                </template>
-                <v-list :color="getColors.backgroundColor">
-                  <v-list-item link>
-                    <v-list-item-title @click="edit = true">
-                      Edit
-                    </v-list-item-title>
-                  </v-list-item>
-                  <v-list-item link>
-                    <v-list-item-title @click="deleteDream" style="color: red">
-                      Delete
-                    </v-list-item-title>
-                  </v-list-item>
-                </v-list>
-              </v-menu>
-            </v-fab-transition>
+          <v-col cols="3" class="d-flex justify-center">
+            <v-fade-transition>
+              <v-btn v-if="edit" class="mr-3" @click="edit = false" icon>
+                <v-icon color="orange"> mdi-window-close </v-icon>
+              </v-btn>
+              <v-btn v-else class="mr-3" @click="edit = true" icon>
+                <v-icon :color="getColors.iconColor" dark>mdi-pencil</v-icon>
+              </v-btn>
+            </v-fade-transition>
+            <v-menu min-width="175" offset-x left>
+              <template v-slot:activator="{ on, attrs }">
+                <v-btn v-bind="attrs" v-on="on" icon>
+                  <v-icon :color="getColors.iconColor" dark> mdi-menu </v-icon>
+                </v-btn>
+              </template>
+              <v-list :color="getColors.backgroundColor">
+                <v-list-item link>
+                  <v-list-item-title @click="deleteDream" style="color: red">
+                    Delete
+                  </v-list-item-title>
+                </v-list-item>
+              </v-list>
+            </v-menu>
           </v-col>
         </v-row>
       </v-container>
@@ -135,18 +145,6 @@
           dense
         ></v-text-field>
       </v-card-subtitle>
-    </v-card>
-
-    <v-card class="ma-auto" max-width="800">
-      <v-btn
-        @click="addSubDream"
-        class="mt-5"
-        :color="getColors.completeBtnColor"
-        block
-        light
-      >
-        Add Dream
-      </v-btn>
     </v-card>
 
     <v-bottom-sheet

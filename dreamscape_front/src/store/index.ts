@@ -14,7 +14,8 @@ const url = "http://192.168.1.250:3001";
 // const url = "http://localhost:3000";
 
 let user = "";
-if (window.location.port === "8081") user = "nick";
+if (window.location.port === "8081" || window.location.port === "8080")
+  user = "nick";
 if (window.location.port === "8000") user = "lydia";
 axios.defaults.headers.common = {
   "requested-from": user,
