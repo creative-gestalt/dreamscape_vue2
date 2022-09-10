@@ -1,7 +1,7 @@
 <template>
   <v-container>
     <v-btn
-      v-if="!edit"
+      v-if="edit"
       @click="addSubDream"
       :style="{ marginBottom: isIOS ? '80px' : '50px' }"
       :color="getColors.completeBtnColor"
