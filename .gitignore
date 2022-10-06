@@ -7,7 +7,7 @@ package-lock.json
 # local env files
 .env.local
 .env.*.local
-.env
+dreamscape_back/.env
 
 # Log files
 npm-debug.log*

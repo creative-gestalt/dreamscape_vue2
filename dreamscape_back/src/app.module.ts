@@ -9,9 +9,12 @@ const url = '192.168.1.250'; // production
 
 @Module({
   imports: [
-    MongooseModule.forRoot(`mongodb://${url}/dreamscape`, {
-      useNewUrlParser: true,
-    }),
+    MongooseModule.forRoot(
+      `mongodb://${process.env.DB_USER}:${process.env.DB_PASS}@${url}/dreamscape`,
+      {
+        useNewUrlParser: true,
+      },
+    ),
     DreamsModule,
     SessionsModule,
     SettingsModule,
