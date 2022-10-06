@@ -8,51 +8,10 @@
           :color="getColors.topBarColor"
           hover
         >
-          <v-menu
-            ref="menu"
-            v-model="menu"
-            :close-on-content-click="false"
-            transition="scale-transition"
-            min-width="auto"
-            offset-y
-          >
-            <template v-slot:activator="{ on, attrs }">
-              <v-card
-                v-bind="attrs"
-                v-on="on"
-                class="mb-5"
-                :color="getColors.backgroundColor | alpha('50%')"
-                outlined
-              >
-                <v-row align="center" justify="center">
-                  <v-col cols="10">
-                    <v-card-title :style="{ color: getColors.textColor }">
-                      {{ computedDate }}
-                    </v-card-title>
-                  </v-col>
-                  <v-col cols="2">
-                    <v-icon
-                      class="float-right mr-3"
-                      :color="getColors.textColor | alpha('50%')"
-                    >
-                      mdi-gesture-tap
-                    </v-icon>
-                  </v-col>
-                </v-row>
-              </v-card>
-            </template>
-            <v-date-picker
-              v-model="date"
-              :max="max"
-              min="1950-01-01"
-              @change="saveDate"
-              show-adjacent-months
-            ></v-date-picker>
-          </v-menu>
           <v-chip
             v-for="(dream, i) of dreams"
             :key="dream + i"
-            class="mb-2 mt-n3 mx-1"
+            class="mb-2 mx-1"
             :style="{ color: getColors.textColor }"
             @click:close="deleteSubDream(i)"
             outlined
@@ -65,30 +24,60 @@
             v-model="dream"
             ref="dreamInput"
             label="Dream"
-            rows="4"
+            rows="8"
             :messages="time"
             :color="getColors.textColor"
             outlined
-            shaped
             dense
           ></v-textarea>
-          <v-row no-gutters>
-            <v-col cols="10" class="text-left">
+          <v-row class="mb-3" no-gutters>
+            <v-col cols="12">
               <v-btn
                 @click="addDream(dream)"
                 :color="getColors.backgroundColor | alpha('50%')"
                 :style="{ color: getColors.textColor }"
-                width="98%"
+                block
               >
                 Add Dream
               </v-btn>
             </v-col>
-            <v-col cols="2">
+          </v-row>
+          <v-row no-gutters>
+            <v-col cols="6">
+              <v-menu
+                ref="menu"
+                v-model="menu"
+                :close-on-content-click="false"
+                transition="scale-transition"
+                min-width="auto"
+                offset-y
+              >
+                <template v-slot:activator="{ on, attrs }">
+                  <v-btn
+                    v-bind="attrs"
+                    v-on="on"
+                    :color="getColors.backgroundColor | alpha('50%')"
+                    :style="{ color: getColors.textColor }"
+                    width="98%"
+                  >
+                    {{ computedDay }}
+                  </v-btn>
+                </template>
+                <v-date-picker
+                  v-model="date"
+                  :max="max"
+                  min="1950-01-01"
+                  @change="saveDate"
+                  show-adjacent-months
+                ></v-date-picker>
+              </v-menu>
+            </v-col>
+            <v-col cols="6">
               <v-btn
                 @click="openTimeModal"
                 :color="getColors.backgroundColor | alpha('50%')"
                 :style="{ color: getColors.textColor }"
-                block
+                width="98%"
               >
                 <v-icon>mdi-clock-outline</v-icon>
               </v-btn>
@@ -163,8 +152,8 @@
           </v-text-field>
           <v-btn
             @click="setNewTime"
-            :style="{ color: getColors.textColor }"
             :color="getColors.completeBtnColor"
+            light
             block
           >
             Set
@@ -286,6 +275,17 @@ export default Vue.extend({
   },
   computed: {
     ...mapGetters(["getColors", "getDate"]),
+    computedDay(): string {
+      return this.date
+        ? new Date(this.date + this.getDate().slice(10, 19)).toLocaleString(
+            "en-US",
+            {
+              month: "short",
+              day: "numeric",
+            }
+          )
+        : "";
+    },
     computedDate(): string {
       return this.date
         ? new Date(this.date + this.getDate().slice(10, 19)).toLocaleString(
