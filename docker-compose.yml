@@ -37,5 +37,7 @@ services:
       MONGO_INITDB_ROOT_USERNAME: ${DB_USER}
       MONGO_INITDB_ROOT_PASSWORD: ${DB_PASS}
     ports:
-      - "27018:27017"
+      - "27017:27017"
+    volumes:
+      - ./data:/data/db
     restart: unless-stopped
