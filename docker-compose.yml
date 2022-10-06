@@ -36,4 +36,6 @@ services:
     environment:
       MONGO_INITDB_ROOT_USERNAME: ${DB_USER}
       MONGO_INITDB_ROOT_PASSWORD: ${DB_PASS}
+    ports:
+      - "27018:27017"
     restart: unless-stopped
