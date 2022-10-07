@@ -14,8 +14,7 @@ db.createUser({
     ]
 })
 
-db.createCollection("dreams-nick")
-db.createCollection("dreams-lydia")
+db.createCollection("dreams-$USER")
 db.createCollection("sessions")
 db.createCollection("settings")
 

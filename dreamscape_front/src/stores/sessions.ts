@@ -1,11 +1,8 @@
 import piniaPluginPersistedstate from "pinia-plugin-persistedstate";
 import { createPinia, defineStore } from "pinia";
-import { Pagination, State } from "@/interfaces/state.interface";
-import { Dream } from "@/interfaces/dream.interface";
-import { Colors, Settings } from "@/interfaces/settings.interface";
+import { State } from "@/interfaces/state.interface";
 import { Session } from "@/interfaces/session.interface";
 import axios from "axios";
-import { sleep } from "@/utils/constants";
 
 export const pinia = createPinia();
 pinia.use(piniaPluginPersistedstate);

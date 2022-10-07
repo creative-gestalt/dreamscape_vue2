@@ -5,6 +5,7 @@ services:
     container_name: dreamscape_front
     working_dir: /dreamscape_front
     environment:
+      USER: ${USER}
       SERVER_ADDRESS: http://${SERVER_HOST}:${SERVER_PORT}
     ports:
       - "${FRONT_PORT}:8080"
@@ -37,6 +38,7 @@ services:
     image: mongo:5.0
     container_name: mongo_ds
     environment:
+      USER: ${USER}
       DB_USER: ${DB_USER}
       DB_PWD: ${DB_PWD}
       INIT_DB: ${INIT_DB}

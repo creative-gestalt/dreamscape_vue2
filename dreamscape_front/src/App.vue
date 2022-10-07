@@ -43,7 +43,7 @@
     </v-app-bar>
 
     <v-main>
-      <v-overlay v-if="loading" class="ma-auto ios-overlay">
+      <v-overlay v-if="getLoading" class="ma-auto ios-overlay">
         <v-progress-circular size="45" indeterminate></v-progress-circular>
       </v-overlay>
       <router-view />
