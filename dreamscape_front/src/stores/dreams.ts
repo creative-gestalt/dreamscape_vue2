@@ -28,7 +28,6 @@ export const dreamStore = defineStore("dreams", {
         completeBtnColor: "#007707",
       },
     } as Settings,
-    loading: false,
     currentTab: 0,
   }),
   getters: {
@@ -51,7 +50,6 @@ export const dreamStore = defineStore("dreams", {
         .reverse();
     },
     getDreamDates: (state: State): string[] => state.dates,
-    getLoading: (state: State): boolean => state.loading,
     getCurrentTab: (state: State): number => state.currentTab,
   },
   actions: {

@@ -35,13 +35,15 @@
 import Vue from "vue";
 import NewDream from "../components/dreams/NewDream.vue";
 import DreamList from "../components/dreams/DreamList.vue";
-import { mapGetters } from "vuex";
+import { mainStore } from "@/stores/main";
+import { mapState, mapStores } from "pinia";
+import { dreamStore } from "@/stores/dreams";
 
 export default Vue.extend({
   name: "DreamsPage",
   created(): void {
     setTimeout(() => (this.show = true), 100);
-    this.selectedTab = this.$store.getters.getCurrentTab;
+    this.selectedTab = this.dreamsStore.getCurrentTab;
   },
   data: () => ({
     show: false,
@@ -56,17 +58,18 @@ export default Vue.extend({
   methods: {
     handleTabs(index: number): void {
       this.selectedTab = index;
-      this.$store.dispatch("updateCurrentTab", index);
+      this.dreamsStore.updateCurrentTab(index);
     },
   },
   computed: {
-    ...mapGetters(["getColors", "getCurrentTab"]),
+    ...mapStores(dreamStore),
+    ...mapState(mainStore, ["getColors"]),
     isMobile(): boolean {
       return this.$vuetify.breakpoint.name === "xs";
     },
     compTab: {
       get(): number {
-        return this.getCurrentTab;
+        return this.dreamsStore.getCurrentTab;
       },
       set(newVal: number): number {
         return newVal;

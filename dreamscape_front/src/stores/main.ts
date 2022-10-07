@@ -40,7 +40,7 @@ export const mainStore = defineStore("main", {
         .sort()
         .reverse();
     },
-    loading: (state: State): boolean => state.loading,
+    getLoading: (state: State): boolean => state.loading,
   },
   actions: {
     async reset(payload: Settings): Promise<void> {
