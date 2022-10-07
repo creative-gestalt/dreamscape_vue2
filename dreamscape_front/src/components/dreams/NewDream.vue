@@ -166,8 +166,10 @@
 
 <script lang="ts">
 import Vue from "vue";
-import { mapGetters } from "vuex";
 import { SubDream } from "@/interfaces/dream.interface";
+import { mapState, mapStores } from "pinia";
+import { mainStore } from "@/stores/main";
+import { dreamStore } from "@/stores/dreams";
 
 export default Vue.extend({
   name: "NewDream",
@@ -244,10 +246,10 @@ export default Vue.extend({
       }
     },
     async completeDream(): Promise<void> {
-      await this.$store.dispatch("updateLoading", true);
+      await this.mainStore.updateLoading(true);
       if (this.dream.length > 0) this.addDream(this.dream, false);
       if (this.date && this.dreams.length > 0) {
-        await this.$store.dispatch("addDream", {
+        await this.dreamsStore.addDream({
           date: this.date + this.getDate().slice(10, 19),
           dreams: this.dreams,
           keywords:
@@ -257,7 +259,7 @@ export default Vue.extend({
               ? [this.keywords]
               : [],
         });
-        await this.$store.dispatch("getDreamsForPage", {
+        await this.dreamsStore.getDreamsForPage({
           skip: 0,
           limit: 13,
         });
@@ -269,12 +271,13 @@ export default Vue.extend({
       } else {
         this.snackText = "No dreams to submit";
       }
-      await this.$store.dispatch("updateLoading", false);
+      await this.mainStore.updateLoading(false);
       this.snackbar = true;
     },
   },
   computed: {
-    ...mapGetters(["getColors", "getDate"]),
+    ...mapStores(mainStore, dreamStore),
+    ...mapState(mainStore, ["getColors", "getDate"]),
     computedDay(): string {
       return this.date
         ? new Date(this.date + this.getDate().slice(10, 19)).toLocaleString(

@@ -166,7 +166,7 @@ export default Vue.extend({
   name: "ViewSession",
   async created() {
     this.id = String(this.$route.params.id);
-    this.session = await this.sessionsStore.getASession({ _id: this.id });
+    this.session = await this.sessionsStore.getSession({ _id: this.id });
     this.sessionTime = this.session.date.slice(10, 19);
     this.session.date = this.session.date.slice(0, 10);
     this.max = this.getDate().slice(0, 10);

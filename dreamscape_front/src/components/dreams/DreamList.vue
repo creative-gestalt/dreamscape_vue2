@@ -74,15 +74,16 @@
 <script lang="ts">
 import Vue from "vue";
 import { Dream } from "@/interfaces/dream.interface";
-import { mapGetters } from "vuex";
-import { truncate } from "@/utils/constants";
+import { mapState, mapStores } from "pinia";
+import { mainStore } from "@/stores/main";
+import { dreamStore } from "@/stores/dreams";
 
 export default Vue.extend({
   name: "DreamList",
   async created() {
     if (this.getDreamsCount === 0) {
       await this.getDreamsForPage(1);
-      await this.$store.dispatch("getDreamsCount");
+      await this.dreamsStore.getDreamsCount();
     }
   },
   data: () => ({
@@ -105,14 +106,14 @@ export default Vue.extend({
   }),
   methods: {
     async getDreamsForPage(pageNumber: number): Promise<void> {
-      await this.$store.dispatch("updateLoading", true);
+      await this.mainStore.updateLoading(true);
       this.currentPage = pageNumber;
       const skip = (pageNumber - 1) * this.itemsPerPage;
-      await this.$store.dispatch("getDreamsForPage", {
+      await this.dreamsStore.getDreamsForPage({
         skip,
         limit: this.itemsPerPage,
       });
-      await this.$store.dispatch("updateLoading", false);
+      await this.mainStore.updateLoading(false);
     },
     handleClick(dream: Dream): void {
       this.$router.push(`/dream/${dream._id}`);
@@ -126,7 +127,9 @@ export default Vue.extend({
     },
   },
   computed: {
-    ...mapGetters(["getColors", "getDreams", "getDreamsCount"]),
+    ...mapStores(mainStore, dreamStore),
+    ...mapState(mainStore, ["getColors"]),
+    ...mapState(dreamStore, ["getDreams", "getDreamsCount"]),
     compItemsPerPage: {
       get(): number {
         return this.itemsPerPage;
@@ -136,13 +139,13 @@ export default Vue.extend({
       },
     },
     compPages(): number {
-      return Math.ceil(this.$store.getters.getDreamsCount / this.itemsPerPage);
+      return Math.ceil(this.dreamsStore.getDreamsCount / this.itemsPerPage);
     },
   },
   watch: {
     search(value: string): void {
       if (value) {
-        this.$store.dispatch("searchDreams", value);
+        this.dreamsStore.searchDreams(value);
       } else {
         this.getDreamsForPage(1);
       }

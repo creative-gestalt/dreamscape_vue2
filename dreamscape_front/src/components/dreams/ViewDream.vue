@@ -212,14 +212,16 @@
 
 <script lang="ts">
 import Vue from "vue";
-import { mapActions, mapGetters } from "vuex";
 import { Dream, SubDream } from "@/interfaces/dream.interface";
+import { mapState, mapStores } from "pinia";
+import { mainStore } from "@/stores/main";
+import { dreamStore } from "@/stores/dreams";
 
 export default Vue.extend({
   name: "ViewDream",
   async created() {
     this.id = String(this.$route.params.id);
-    this.dream = await this.getADream({ _id: this.id });
+    this.dream = await this.dreamsStore.getDream({ _id: this.id } as Dream);
     this.dreamTime = this.dream.date.slice(10, 19);
     this.dream.date = this.dream.date.slice(0, 10);
     this.max = this.getDate().slice(0, 10);
@@ -246,7 +248,6 @@ export default Vue.extend({
     tapDelete: false,
   }),
   methods: {
-    ...mapActions({ getADream: "getDream" }),
     updateSubDream(): void {
       this.dream.dreams[this.selectedSubIndex].subDream =
         this.selectedSubDream.subDream;
@@ -292,20 +293,20 @@ export default Vue.extend({
       this.submitDream();
     },
     async submitDream(): Promise<void> {
-      await this.$store.dispatch("updateDream", {
+      await this.dreamsStore.updateDream({
         _id: this.id,
         date: this.dream.date + this.dreamTime,
         dreams: this.dream.dreams,
         keywords: this.dream.keywords.length > 0 ? this.dream.keywords : [],
       });
-      await this.$store.dispatch("getDreamsForPage", {
+      await this.dreamsStore.getDreamsForPage({
         skip: 0,
         limit: 13,
       });
     },
     async deleteDream(): Promise<void> {
-      await this.$store.dispatch("deleteDreams", this.dream);
-      await this.$store.dispatch("getDreamsForPage", {
+      await this.dreamsStore.deleteDreams([this.dream]);
+      await this.dreamsStore.getDreamsForPage({
         skip: 0,
         limit: 13,
       });
@@ -313,7 +314,9 @@ export default Vue.extend({
     },
   },
   computed: {
-    ...mapGetters(["getDate", "getColors"]),
+    ...mapStores(mainStore, dreamStore),
+    ...mapState(mainStore, ["getDate", "getColors"]),
+    ...mapState(dreamStore, ["getDreams", "getDreamsCount"]),
     isIOS(): boolean {
       // return true;
       return this.fullscreenBuffer === 80;
