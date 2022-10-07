@@ -1,12 +1,13 @@
 version: "3.9"
 services:
   dreamscape_front:
-    build: ./dreamscape_front
+    build:
+      context: ./dreamscape_front
+      args:
+        APP_USER: ${APP_USER}
+        SERVER_ADDRESS: http://${SERVER_HOST}:${SERVER_PORT}
     container_name: dreamscape_front_${APP_USER}
     working_dir: /dreamscape_front
-    environment:
-      APP_USER: ${APP_USER}
-      SERVER_ADDRESS: http://${SERVER_HOST}:${SERVER_PORT}
     ports:
       - "${FRONT_PORT}:8080"
     command: serve -s dist -l 8080
