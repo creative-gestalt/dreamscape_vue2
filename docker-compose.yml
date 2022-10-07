@@ -6,9 +6,9 @@ services:
     working_dir: /dreamscape_front
     ports:
       - "${FRONT_PORT}:8080"
-    environment:
-      VUE_APP_APP_USER: ${APP_USER}
-      VUE_APP_SERVER_ADDRESS: http://${SERVER_HOST}:${SERVER_PORT}
+#    environment:
+#      VUE_APP_APP_USER: ${APP_USER}
+#      VUE_APP_SERVER_ADDRESS: http://${SERVER_HOST}:${SERVER_PORT}
     command: serve -s dist -l 8080
     restart: unless-stopped
 
