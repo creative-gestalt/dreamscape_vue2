@@ -5,7 +5,7 @@ import { SessionsModule } from './dreamscape-sessions/sessions.module';
 import { SettingsModule } from './dreamscape-settings/settings.module';
 
 const url = '192.168.1.250'; // production
-const port = '270178';
+const port = '27018';
 // const url = 'localhost';
 
 @Module({
