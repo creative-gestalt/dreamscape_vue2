@@ -19,13 +19,13 @@ services:
     ports:
       - "${SERVER_PORT}:3000"
     environment:
-      MONGODB_CONNSTRING: mongodb://${DB_USER}:${DB_PWD}@mongodb
+      MONGODB_CONNSTRING: mongodb://${DB_USER}:${DB_PWD}@mongodb_${APP_USER}
     command: node dist/main
     restart: unless-stopped
     links:
       - mongodb
 
-  mongodb:
+  mongodb_${APP_USER}:
     image: mongo:5.0
     container_name: mongo_ds_${APP_USER}
     environment:
