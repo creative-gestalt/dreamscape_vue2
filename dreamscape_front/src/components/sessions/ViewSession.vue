@@ -167,8 +167,8 @@ export default Vue.extend({
   async created() {
     this.id = String(this.$route.params.id);
     this.session = await this.sessionsStore.getSession({ _id: this.id });
-    this.sessionTime = this.session.date.slice(10, 19);
-    this.session.date = this.session.date.slice(0, 10);
+    this.sessionTime = this.session.date?.slice(10, 19) || "";
+    this.session.date = this.session.date?.slice(0, 10);
     this.max = this.getDate().slice(0, 10);
   },
   data: () => ({
@@ -211,7 +211,7 @@ export default Vue.extend({
       await this.sessionsStore.getAllSessions();
     },
     async deleteSession(): Promise<void> {
-      await this.sessionsStore.deleteSessions(this.session);
+      await this.sessionsStore.deleteSessions([this.session]);
       await this.sessionsStore.getAllSessions();
       await this.$router.push("/sessions");
     },

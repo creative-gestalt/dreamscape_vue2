@@ -1,6 +1,6 @@
 import piniaPluginPersistedstate from "pinia-plugin-persistedstate";
 import { createPinia, defineStore } from "pinia";
-import { Pagination, State } from "@/interfaces/state.interface";
+import { Pagination } from "@/interfaces/state.interface";
 import { Dream } from "@/interfaces/dream.interface";
 import axios from "axios";
 
@@ -18,13 +18,20 @@ export const dreamStore = defineStore("dreams", {
     currentTab: 0,
   }),
   getters: {
-    getDreams: (state: State): Dream[] => state.dreams,
-    getDreamsCount: (state: State): number => state.dreamsCount,
-    getDreamDates: (state: State): string[] => state.dates,
-    getCurrentTab: (state: State): number => state.currentTab,
+    getDreams: (state): Dream[] => state.dreams,
+    getDreamsCount: (state): number => state.dreamsCount,
+    getDreamDates: (state): string[] => state.dates,
+    getCurrentTab: (state): number => state.currentTab,
+    getYears: (state): string[] => {
+      return [
+        ...new Set([...state.dates].map((date: string) => date.slice(0, 4))),
+      ]
+        .sort()
+        .reverse();
+    },
   },
   actions: {
-    async getDreamsCount(payload: Pagination): Promise<void> {
+    async getDreamsCount(): Promise<void> {
       await axios
         .get(`${url}/getDreamsCount`)
         .then((data) => (this.dreamsCount = data.data));
@@ -34,7 +41,7 @@ export const dreamStore = defineStore("dreams", {
         .get(`${url}/getDreams/${payload.skip}-${payload.limit}`)
         .then((data) => (this.dreams = data.data));
     },
-    async getDream(payload: Dream): Promise<void> {
+    async getDream(payload: Dream): Promise<Dream> {
       return await axios
         .get(`${url}/getDream/${payload._id}`)
         .then((result) => result.data);

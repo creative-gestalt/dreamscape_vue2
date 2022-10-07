@@ -1,6 +1,5 @@
 import piniaPluginPersistedstate from "pinia-plugin-persistedstate";
 import { createPinia, defineStore } from "pinia";
-import { State } from "@/interfaces/state.interface";
 import { Session } from "@/interfaces/session.interface";
 import axios from "axios";
 
@@ -16,8 +15,8 @@ export const sessionStore = defineStore("sessions", {
     currentTab: 0,
   }),
   getters: {
-    getSessions: (state: State): Session[] => state.sessions,
-    getCurrentTab: (state: State): number => state.currentTab,
+    getSessions: (state): Session[] => state.sessions,
+    getCurrentTab: (state): number => state.currentTab,
   },
   actions: {
     async getAllSessions(): Promise<void> {
@@ -25,7 +24,7 @@ export const sessionStore = defineStore("sessions", {
         .get(`${url}/getSessions/0-${this.limit}`)
         .then((data) => (this.sessions = data.data));
     },
-    async loadMoreSessions(payload: Record<string, string>): Promise<void> {
+    async loadMoreSessions(payload: Record<string, number>): Promise<void> {
       await axios
         .get(`${url}/getSessions/${payload.skip}-${payload.limit}`)
         .then((data) => {
@@ -34,7 +33,7 @@ export const sessionStore = defineStore("sessions", {
           }
         });
     },
-    async getSession(payload: Session): Promise<void> {
+    async getSession(payload: Session): Promise<Session> {
       return await axios
         .get(`${url}/getSession/${payload._id}`)
         .then((result) => result.data);

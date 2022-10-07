@@ -1,6 +1,5 @@
 import piniaPluginPersistedstate from "pinia-plugin-persistedstate";
 import { createPinia, defineStore } from "pinia";
-import { State } from "@/interfaces/state.interface";
 import { Colors, Settings } from "@/interfaces/settings.interface";
 import { sleep } from "@/utils/constants";
 import axios from "axios";
@@ -25,22 +24,15 @@ export const mainStore = defineStore("main", {
     loading: false,
   }),
   getters: {
-    getSettings: (state: State): Settings => state.settings,
-    getColors: (state: State): Colors => state.settings.colors,
+    getSettings: (state): Settings => state.settings,
+    getColors: (state): Colors => state.settings.colors,
     getDate: () => (): string => {
       const now = new Date();
       const offsetMs = now.getTimezoneOffset() * 60 * 1000;
       const dateLocal = new Date(now.getTime() - offsetMs);
       return dateLocal.toISOString().slice(0, 19);
     },
-    getYears: (state: State): string[] => {
-      return [
-        ...new Set([...state.dates].map((date: string) => date.slice(0, 4))),
-      ]
-        .sort()
-        .reverse();
-    },
-    getLoading: (state: State): boolean => state.loading,
+    getLoading: (state): boolean => state.loading,
   },
   actions: {
     async reset(payload: Settings): Promise<void> {

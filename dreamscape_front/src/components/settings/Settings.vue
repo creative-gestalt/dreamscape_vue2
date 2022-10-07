@@ -123,7 +123,7 @@ import { mapState, mapStores } from "pinia";
 import { sessionStore } from "@/stores/sessions";
 
 export default Vue.extend({
-  name: "Settings",
+  name: "SettingsComponent",
   data: () => ({
     //
   }),

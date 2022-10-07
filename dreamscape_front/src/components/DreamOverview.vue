@@ -78,7 +78,8 @@ export default Vue.extend({
   },
   computed: {
     ...mapStores(mainStore, dreamStore),
-    ...mapState(mainStore, ["getColors", "getYears"]),
+    ...mapState(mainStore, ["getColors"]),
+    ...mapState(dreamStore, ["getYears"]),
     isMobile(): boolean {
       return this.$vuetify.breakpoint.name === "xs";
     },

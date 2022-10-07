@@ -1,5 +1,5 @@
 export interface Dream {
-  _id: string;
+  _id?: string;
   date: string;
   dreams: SubDream[];
   keywords: string[];
