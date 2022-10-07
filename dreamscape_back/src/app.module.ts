@@ -4,14 +4,10 @@ import { DreamsModule } from './dreamscape-dreams/dreams.module';
 import { SessionsModule } from './dreamscape-sessions/sessions.module';
 import { SettingsModule } from './dreamscape-settings/settings.module';
 
-const url = '192.168.1.250'; // production
-const port = '27018';
-// const url = 'localhost';
-
 @Module({
   imports: [
     MongooseModule.forRoot(
-      `mongodb://${process.env.DB_USER}:${process.env.DB_PASS}@${url}:${port}/dreamscape`,
+      `mongodb://${process.env.DB_USER}:${process.env.DB_PASS}@mongodb:27018/dreamscape`,
       {
         useNewUrlParser: true,
       },

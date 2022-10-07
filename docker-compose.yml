@@ -21,6 +21,8 @@ services:
       MONGODB_CONNSTRING: mongodb://${DB_USER}:${DB_PASS}@mongodb
     command: serve -s dist -l 8080
     restart: unless-stopped
+    links:
+      - mongodb
 
   dreamscape_back:
     build: ./dreamscape_back
