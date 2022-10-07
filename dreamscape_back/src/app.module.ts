@@ -7,7 +7,7 @@ import { SettingsModule } from './dreamscape-settings/settings.module';
 @Module({
   imports: [
     MongooseModule.forRoot(
-      `mongodb://${process.env.DB_USER}:${process.env.DB_PASS}@mongodb:27018/dreamscape`,
+      `mongodb://${process.env.MONGODB_CONNSTRING}/dreamscape`,
       {
         useNewUrlParser: true,
       },
