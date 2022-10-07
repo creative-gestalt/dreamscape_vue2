@@ -5,7 +5,7 @@
         <v-card
           class="pa-2 ma-auto"
           max-width="800"
-          :color="getColors.topBarColor"
+          :color="gColors.topBarColor"
           hover
         >
           <v-menu
@@ -20,19 +20,19 @@
               <v-card
                 v-bind="attrs"
                 v-on="on"
-                :color="getColors.backgroundColor | alpha('50%')"
+                :color="gColors.backgroundColor | alpha('50%')"
                 outlined
               >
                 <v-row align="center" justify="center">
                   <v-col cols="10">
-                    <v-card-title :style="{ color: getColors.textColor }">
+                    <v-card-title :style="{ color: gColors.textColor }">
                       {{ computedDate }}
                     </v-card-title>
                   </v-col>
                   <v-col cols="2">
                     <v-icon
                       class="float-right mr-3"
-                      :color="getColors.textColor | alpha('50%')"
+                      :color="gColors.textColor | alpha('50%')"
                     >
                       mdi-gesture-tap
                     </v-icon>
@@ -56,7 +56,7 @@
         <v-card
           class="pa-2 pt-3 ma-auto"
           max-width="800"
-          :color="getColors.topBarColor"
+          :color="gColors.topBarColor"
           hover
         >
           <v-row class="align-center">
@@ -68,7 +68,7 @@
                 v-for="(qa, i) of qas"
                 :key="qa + i"
                 class="mb-2 mx-1"
-                :style="{ color: getColors.textColor }"
+                :style="{ color: gColors.textColor }"
                 @click:close="deleteQuestionsAnswers(i)"
                 outlined
                 close
@@ -81,7 +81,7 @@
           <v-text-field
             v-model="entity"
             label="Entity"
-            :color="getColors.textColor"
+            :color="gColors.textColor"
             @keyup.enter="$refs.questionInput.focus()"
             outlined
             shaped
@@ -90,7 +90,7 @@
           <v-text-field
             v-model="question"
             label="Question"
-            :color="getColors.textColor"
+            :color="gColors.textColor"
             ref="questionInput"
             @keyup.enter="$refs.answerInput.focus()"
             outlined
@@ -100,7 +100,7 @@
           <v-text-field
             v-model="answer"
             label="Answer"
-            :color="getColors.textColor"
+            :color="gColors.textColor"
             ref="answerInput"
             :messages="time"
             @keyup.enter="addQuestionsAnswers({ question, answer })"
@@ -116,15 +116,15 @@
         <v-card
           class="pa-2 ma-auto"
           max-width="800"
-          :color="getColors.topBarColor"
+          :color="gColors.topBarColor"
           hover
         >
           <v-row no-gutters>
             <v-col cols="10" class="text-left">
               <v-btn
                 @click="addQuestionsAnswers({ question, answer })"
-                :color="getColors.backgroundColor | alpha('50%')"
-                :style="{ color: getColors.textColor }"
+                :color="gColors.backgroundColor | alpha('50%')"
+                :style="{ color: gColors.textColor }"
                 width="98%"
                 light
               >
@@ -134,8 +134,8 @@
             <v-col cols="2">
               <v-btn
                 @click="openTimeModal"
-                :color="getColors.backgroundColor | alpha('50%')"
-                :style="{ color: getColors.textColor }"
+                :color="gColors.backgroundColor | alpha('50%')"
+                :style="{ color: gColors.textColor }"
                 block
               >
                 <v-icon>mdi-clock-outline</v-icon>
@@ -150,7 +150,7 @@
       <v-btn
         class="mt-5"
         @click="completeSession"
-        :color="getColors.completeBtnColor"
+        :color="gColors.completeBtnColor"
         block
         light
       >
@@ -161,8 +161,8 @@
     <v-snackbar
       v-model="snackbar"
       :timeout="timeout"
-      :style="{ color: getColors.textColor }"
-      :color="getColors.completeBtnColor"
+      :style="{ color: gColors.textColor }"
+      :color="gColors.completeBtnColor"
       bottom
     >
       <template v-slot:action="{ attrs }">
@@ -174,7 +174,7 @@
     </v-snackbar>
 
     <v-dialog v-model="timeModal" max-width="300">
-      <v-card :color="getColors.topBarColor">
+      <v-card :color="gColors.topBarColor">
         <v-card-title>Set Time</v-card-title>
         <v-container>
           <v-text-field ref="time" :value="time" filled outlined>
@@ -182,8 +182,8 @@
           </v-text-field>
           <v-btn
             @click="setNewTime"
-            :style="{ color: getColors.textColor }"
-            :color="getColors.completeBtnColor"
+            :style="{ color: gColors.textColor }"
+            :color="gColors.completeBtnColor"
             block
           >
             Set
@@ -204,7 +204,7 @@ import { sessionStore } from "@/stores/sessions";
 export default Vue.extend({
   name: "NewSession",
   created() {
-    this.date = this.max = this.getDate().slice(0, 10);
+    this.date = this.max = this.gDate().slice(0, 10);
   },
   data: () => ({
     date: "",
@@ -269,7 +269,7 @@ export default Vue.extend({
         });
       if (this.date && this.entity.length > 0 && this.qas.length > 0) {
         await this.sessionsStore.addSession({
-          date: this.date + this.getDate().slice(10, 19),
+          date: this.date + this.gDate().slice(10, 19),
           session: { entity: this.entity, qas: this.qas, time: this.time },
         });
         await this.sessionsStore.getAllSessions;
@@ -285,10 +285,10 @@ export default Vue.extend({
   },
   computed: {
     ...mapStores(mainStore, sessionStore),
-    ...mapState(mainStore, ["getColors", "getDate"]),
+    ...mapState(mainStore, ["gColors", "gDate"]),
     computedDate(): string {
       return this.date
-        ? new Date(this.date + this.getDate().slice(10, 19)).toLocaleString(
+        ? new Date(this.date + this.gDate().slice(10, 19)).toLocaleString(
             "en-US",
             {
               weekday: "short",

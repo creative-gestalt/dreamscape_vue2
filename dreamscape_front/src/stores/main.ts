@@ -24,15 +24,15 @@ export const mainStore = defineStore("main", {
     loading: false,
   }),
   getters: {
-    getSettings: (state): Settings => state.settings,
-    getColors: (state): Colors => state.settings.colors,
-    getDate: () => (): string => {
+    gSettings: (state): Settings => state.settings,
+    gColors: (state): Colors => state.settings.colors,
+    gDate: () => (): string => {
       const now = new Date();
       const offsetMs = now.getTimezoneOffset() * 60 * 1000;
       const dateLocal = new Date(now.getTime() - offsetMs);
       return dateLocal.toISOString().slice(0, 19);
     },
-    getLoading: (state): boolean => state.loading,
+    gLoading: (state): boolean => state.loading,
   },
   actions: {
     async reset(payload: Settings): Promise<void> {

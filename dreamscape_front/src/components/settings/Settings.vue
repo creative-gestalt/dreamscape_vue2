@@ -3,7 +3,7 @@
     <div>
       <v-row>
         <v-col cols="12">
-          <div class="pb-2" :style="{ color: getColors.textColor }">
+          <div class="pb-2" :style="{ color: gColors.textColor }">
             App Bars & Card Color
             <v-badge
               class="ml-3 float-right"
@@ -23,7 +23,7 @@
           ></v-color-picker>
         </v-col>
         <v-col cols="12">
-          <div class="pb-2" :style="{ color: getColors.textColor }">
+          <div class="pb-2" :style="{ color: gColors.textColor }">
             Background Color
             <v-badge
               class="ml-3 float-right"
@@ -43,7 +43,7 @@
           ></v-color-picker>
         </v-col>
         <v-col cols="12">
-          <div class="pb-2" :style="{ color: getColors.textColor }">
+          <div class="pb-2" :style="{ color: gColors.textColor }">
             Icon Color
             <v-badge
               class="ml-3 float-right"
@@ -63,7 +63,7 @@
           ></v-color-picker>
         </v-col>
         <v-col cols="12">
-          <div class="pb-2" :style="{ color: getColors.textColor }">
+          <div class="pb-2" :style="{ color: gColors.textColor }">
             Text Color
             <v-badge
               class="ml-3 float-right"
@@ -83,7 +83,7 @@
           ></v-color-picker>
         </v-col>
         <v-col cols="12">
-          <div class="pb-2" :style="{ color: getColors.textColor }">
+          <div class="pb-2" :style="{ color: gColors.textColor }">
             Complete Button Color
             <v-badge
               class="ml-3 float-right"
@@ -134,9 +134,9 @@ export default Vue.extend({
   },
   computed: {
     ...mapStores(mainStore, sessionStore),
-    ...mapState(mainStore, ["getColors"]),
+    ...mapState(mainStore, ["gColors"]),
     settings(): Settings {
-      return this.mainStore.getSettings;
+      return this.mainStore.gSettings;
     },
     isMobile(): boolean {
       return this.$vuetify.breakpoint.name === "xs";

@@ -3,12 +3,12 @@
     <div v-if="show">
       <v-tabs
         v-model="tab"
-        :color="getColors.textColor"
-        :background-color="getColors.backgroundColor"
+        :color="gColors.textColor"
+        :background-color="gColors.backgroundColor"
         :grow="isMobile"
         centered
       >
-        <v-tabs-slider :color="getColors.iconColor"></v-tabs-slider>
+        <v-tabs-slider :color="gColors.iconColor"></v-tabs-slider>
 
         <v-tab v-for="(tab, i) in tabs" :key="tab" @change="selectedTab = i">
           {{ tab }}
@@ -17,7 +17,7 @@
 
       <v-tabs-items
         v-model="tab"
-        :style="{ background: getColors.backgroundColor }"
+        :style="{ background: gColors.backgroundColor }"
         touchless
       >
         <v-tab-item transition="slide-y-transition">
@@ -54,7 +54,7 @@ export default Vue.extend({
     SessionList,
   },
   computed: {
-    ...mapState(mainStore, ["getColors"]),
+    ...mapState(mainStore, ["gColors"]),
     isMobile(): boolean {
       return this.$vuetify.breakpoint.name === "xs";
     },

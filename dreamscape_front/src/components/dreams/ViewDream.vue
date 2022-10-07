@@ -4,7 +4,7 @@
       v-if="edit"
       @click="addSubDream"
       :style="{ marginBottom: isIOS ? '80px' : '50px' }"
-      :color="getColors.completeBtnColor"
+      :color="gColors.completeBtnColor"
       light
       fixed
       right
@@ -13,11 +13,7 @@
     >
       +
     </v-btn>
-    <v-card
-      class="ma-auto mb-16"
-      :color="getColors.topBarColor"
-      max-width="800"
-    >
+    <v-card class="ma-auto mb-16" :color="gColors.topBarColor" max-width="800">
       <v-container class="pb-0 mb-n2">
         <v-row align="center" justify="center" no-gutters>
           <v-col cols="9">
@@ -33,10 +29,10 @@
                 <v-card
                   v-bind="attrs"
                   v-on="on"
-                  :color="getColors.backgroundColor | alpha('50%')"
+                  :color="gColors.backgroundColor | alpha('50%')"
                   outlined
                 >
-                  <v-card-title :style="{ color: getColors.textColor }">
+                  <v-card-title :style="{ color: gColors.textColor }">
                     {{ computedDate }}
                   </v-card-title>
                 </v-card>
@@ -56,16 +52,16 @@
                 <v-icon color="orange"> mdi-window-close </v-icon>
               </v-btn>
               <v-btn v-else class="mr-3" @click="edit = true" icon>
-                <v-icon :color="getColors.iconColor" dark>mdi-pencil</v-icon>
+                <v-icon :color="gColors.iconColor" dark>mdi-pencil</v-icon>
               </v-btn>
             </v-fade-transition>
             <v-menu min-width="175" offset-x left>
               <template v-slot:activator="{ on, attrs }">
                 <v-btn v-bind="attrs" v-on="on" icon>
-                  <v-icon :color="getColors.iconColor" dark> mdi-menu </v-icon>
+                  <v-icon :color="gColors.iconColor" dark> mdi-menu </v-icon>
                 </v-btn>
               </template>
-              <v-list :color="getColors.backgroundColor">
+              <v-list :color="gColors.backgroundColor">
                 <v-list-item link>
                   <v-list-item-title @click="deleteDream" style="color: red">
                     Delete
@@ -81,14 +77,14 @@
           v-for="(dream, i) of dream.dreams"
           :key="i"
           class="my-5"
-          :color="getColors.backgroundColor | alpha('50%')"
+          :color="gColors.backgroundColor | alpha('50%')"
           outlined
         >
           <v-row align="center" justify="center">
             <v-col cols="6">
               <v-card-subtitle
                 class="text-left"
-                :style="{ color: getColors.textColor }"
+                :style="{ color: gColors.textColor }"
               >
                 Dream {{ i + 1 }} -
                 {{ dream.time ? dream.time : "No Time Set" }}
@@ -111,12 +107,12 @@
           <v-card-subtitle
             v-html="dream.subDream.replaceAll('\n', '<br/>')"
             class="text-left"
-            :style="getColors.textColor | alpha('70%', true, 'color')"
+            :style="gColors.textColor | alpha('70%', true, 'color')"
           ></v-card-subtitle>
         </v-card>
       </v-container>
       <v-card-subtitle>
-        <div :style="getColors.textColor | alpha('70%', true, 'color')">
+        <div :style="gColors.textColor | alpha('70%', true, 'color')">
           keywords
         </div>
         <v-divider class="pb-2"></v-divider>
@@ -125,7 +121,7 @@
           :key="i"
           class="ma-1"
           :close="edit"
-          :style="{ color: getColors.textColor }"
+          :style="{ color: gColors.textColor }"
           @click:close="removeKeyword(keyword)"
           outlined
         >
@@ -137,7 +133,7 @@
           v-model="keywords"
           label="Keywords"
           append-icon="mdi-check"
-          :color="getColors.textColor"
+          :color="gColors.textColor"
           @click:append="addChip(keywords)"
           @keyup.enter="addChip(keywords)"
           outlined
@@ -154,7 +150,7 @@
       scrollable
       inset
     >
-      <v-card :color="getColors.backgroundColor">
+      <v-card :color="gColors.backgroundColor">
         <v-row align="center" justify="center" no-gutters>
           <v-col cols="6">
             <v-card-title>Edit Dream {{ selectedSubIndex + 1 }}</v-card-title>
@@ -182,7 +178,7 @@
           <v-text-field v-model="selectedSubDream.time"></v-text-field>
           <v-btn
             @click="updateSubDream"
-            :color="getColors.completeBtnColor"
+            :color="gColors.completeBtnColor"
             block
           >
             Submit
@@ -191,7 +187,7 @@
       </v-card>
     </v-bottom-sheet>
     <v-dialog v-model="tapDelete" max-width="300">
-      <v-card :color="getColors.topBarColor">
+      <v-card :color="gColors.topBarColor">
         <v-card-title>Delete</v-card-title>
         <v-card-subtitle>Are you sure?</v-card-subtitle>
         <v-card-actions>
@@ -199,8 +195,8 @@
           <v-btn @click="tapDelete = false">Cancel</v-btn>
           <v-btn
             @click="deleteSubDream"
-            :style="{ color: getColors.textColor }"
-            :color="getColors.completeBtnColor"
+            :style="{ color: gColors.textColor }"
+            :color="gColors.completeBtnColor"
           >
             Delete
           </v-btn>
@@ -224,7 +220,7 @@ export default Vue.extend({
     this.dream = await this.dreamsStore.getDream({ _id: this.id } as Dream);
     this.dreamTime = this.dream.date.slice(10, 19);
     this.dream.date = this.dream.date.slice(0, 10);
-    this.max = this.getDate().slice(0, 10);
+    this.max = this.gDate().slice(0, 10);
   },
   data: () => ({
     id: "",
@@ -315,8 +311,8 @@ export default Vue.extend({
   },
   computed: {
     ...mapStores(mainStore, dreamStore),
-    ...mapState(mainStore, ["getDate", "getColors"]),
-    ...mapState(dreamStore, ["getDreams", "getDreamsCount"]),
+    ...mapState(mainStore, ["gDate", "gColors"]),
+    ...mapState(dreamStore, ["gDreams", "gDreamsCount"]),
     isIOS(): boolean {
       // return true;
       return this.fullscreenBuffer === 80;

@@ -1,6 +1,6 @@
 <template>
   <v-container>
-    <v-card class="ma-auto" :color="getColors.topBarColor" max-width="800">
+    <v-card class="ma-auto" :color="gColors.topBarColor" max-width="800">
       <v-container class="pb-0 mb-n2">
         <v-row align="center" justify="center" no-gutters>
           <v-col cols="10">
@@ -16,10 +16,10 @@
                 <v-card
                   v-bind="attrs"
                   v-on="on"
-                  :color="getColors.backgroundColor | alpha('50%')"
+                  :color="gColors.backgroundColor | alpha('50%')"
                   outlined
                 >
-                  <v-card-title :style="{ color: getColors.textColor }">
+                  <v-card-title :style="{ color: gColors.textColor }">
                     {{ computedDate }}
                   </v-card-title>
                 </v-card>
@@ -37,7 +37,7 @@
             <v-menu min-width="175" offset-x left>
               <template v-slot:activator="{ on, attrs }">
                 <v-icon
-                  :color="getColors.iconColor"
+                  :color="gColors.iconColor"
                   dark
                   v-bind="attrs"
                   v-on="on"
@@ -45,7 +45,7 @@
                   mdi-menu
                 </v-icon>
               </template>
-              <v-list :color="getColors.backgroundColor">
+              <v-list :color="gColors.backgroundColor">
                 <v-list-item link>
                   <v-list-item-title @click="editSheet = true">
                     Edit
@@ -64,12 +64,12 @@
       <v-container v-if="session.session">
         <v-card
           class="my-5"
-          :color="getColors.backgroundColor | alpha('50%')"
+          :color="gColors.backgroundColor | alpha('50%')"
           outlined
         >
           <v-card-subtitle
             class="text-left"
-            :style="{ color: getColors.textColor }"
+            :style="{ color: gColors.textColor }"
           >
             {{ `${session.session.entity} - ${session.session.time}` }}
           </v-card-subtitle>
@@ -78,7 +78,7 @@
             <v-card-subtitle
               v-html="'Q: ' + qa.question + '</br>A: ' + qa.answer"
               class="text-left"
-              :style="getColors.textColor | alpha('70%', true, 'color')"
+              :style="gColors.textColor | alpha('70%', true, 'color')"
             >
             </v-card-subtitle>
           </div>
@@ -93,7 +93,7 @@
       scrollable
       inset
     >
-      <v-card :color="getColors.backgroundColor">
+      <v-card :color="gColors.backgroundColor">
         <v-row align="center" justify="center" no-gutters>
           <v-col cols="6">
             <v-card-title>Edit Session</v-card-title>
@@ -113,7 +113,7 @@
           <v-text-field
             v-model="session.session.entity"
             label="Entity"
-            :color="getColors.textColor"
+            :color="gColors.textColor"
             outlined
             shaped
             dense
@@ -123,7 +123,7 @@
             <v-text-field
               v-model="qa.question"
               label="Question"
-              :color="getColors.textColor"
+              :color="gColors.textColor"
               class="mt-5"
               outlined
               shaped
@@ -132,7 +132,7 @@
             <v-text-field
               v-model="qa.answer"
               label="Answer"
-              :color="getColors.textColor"
+              :color="gColors.textColor"
               class="mt-n3 mb-n2"
               outlined
               shaped
@@ -142,11 +142,7 @@
             </v-text-field>
           </div>
           <v-text-field v-model="session.session.time"></v-text-field>
-          <v-btn
-            @click="updateSession"
-            :color="getColors.completeBtnColor"
-            block
-          >
+          <v-btn @click="updateSession" :color="gColors.completeBtnColor" block>
             Submit
           </v-btn>
         </v-card-text>
@@ -169,7 +165,7 @@ export default Vue.extend({
     this.session = await this.sessionsStore.getSession({ _id: this.id });
     this.sessionTime = this.session.date?.slice(10, 19) || "";
     this.session.date = this.session.date?.slice(0, 10);
-    this.max = this.getDate().slice(0, 10);
+    this.max = this.gDate().slice(0, 10);
   },
   data: () => ({
     id: "",
@@ -218,7 +214,7 @@ export default Vue.extend({
   },
   computed: {
     ...mapStores(mainStore, sessionStore),
-    ...mapState(mainStore, ["getColors", "getDate"]),
+    ...mapState(mainStore, ["gColors", "gDate"]),
     computedDate(): string {
       return this.session.date
         ? new Date(this.session.date + this.sessionTime).toLocaleString(

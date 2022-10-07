@@ -18,11 +18,11 @@ export const dreamStore = defineStore("dreams", {
     currentTab: 0,
   }),
   getters: {
-    getDreams: (state): Dream[] => state.dreams,
-    getDreamsCount: (state): number => state.dreamsCount,
-    getDreamDates: (state): string[] => state.dates,
-    getCurrentTab: (state): number => state.currentTab,
-    getYears: (state): string[] => {
+    gDreams: (state): Dream[] => state.dreams,
+    gDreamsCount: (state): number => state.dreamsCount,
+    gDreamDates: (state): string[] => state.dates,
+    gCurrentTab: (state): number => state.currentTab,
+    gYears: (state): string[] => {
       return [
         ...new Set([...state.dates].map((date: string) => date.slice(0, 4))),
       ]

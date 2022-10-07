@@ -1,5 +1,5 @@
 <template>
-  <v-card class="ma-2 ma-auto" max-width="800" :color="getColors.topBarColor">
+  <v-card class="ma-2 ma-auto" max-width="800" :color="gColors.topBarColor">
     <v-card-title class="ma-0 pa-1 pb-0">
       <v-text-field
         v-model="search"
@@ -24,10 +24,10 @@
       </v-select>
     </v-card-title>
     <v-data-table
-      :items="getDreams"
+      :items="gDreams"
       :headers="headers"
       :items-per-page.sync="compItemsPerPage"
-      :style="{ backgroundColor: getColors.topBarColor }"
+      :style="{ backgroundColor: gColors.topBarColor }"
       item-key="_id"
       mobile-breakpoint="0"
       hide-default-header
@@ -36,18 +36,16 @@
       dense
     >
       <template v-slot:item.date="{ item }">
-        <div :style="getColors.textColor | alpha('70%', true, 'color')">
+        <div :style="gColors.textColor | alpha('70%', true, 'color')">
           <v-list-item link dense>
             <v-list-item-avatar class="ml-n6 mr-1">
-              <span :style="getColors.textColor | alpha('90%', true, 'color')">
+              <span :style="gColors.textColor | alpha('90%', true, 'color')">
                 {{ item.dreams.length }}
               </span>
             </v-list-item-avatar>
             <v-list-item-content>
               <v-list-item-title>
-                <span
-                  :style="getColors.textColor | alpha('90%', true, 'color')"
-                >
+                <span :style="gColors.textColor | alpha('90%', true, 'color')">
                   {{ formatDreamDate(item.date) }}
                 </span>
               </v-list-item-title>
@@ -65,7 +63,7 @@
       v-model="currentPage"
       :length="compPages"
       @input="getDreamsForPage"
-      :color="getColors.completeBtnColor"
+      :color="gColors.completeBtnColor"
     >
     </v-pagination>
   </v-card>
@@ -81,7 +79,7 @@ import { dreamStore } from "@/stores/dreams";
 export default Vue.extend({
   name: "DreamList",
   async created() {
-    if (this.getDreamsCount === 0) {
+    if (this.gDreamsCount === 0) {
       await this.getDreamsForPage(1);
       await this.dreamsStore.getDreamsCount();
     }
@@ -128,8 +126,8 @@ export default Vue.extend({
   },
   computed: {
     ...mapStores(mainStore, dreamStore),
-    ...mapState(mainStore, ["getColors"]),
-    ...mapState(dreamStore, ["getDreams", "getDreamsCount"]),
+    ...mapState(mainStore, ["gColors"]),
+    ...mapState(dreamStore, ["gDreams", "gDreamsCount"]),
     compItemsPerPage: {
       get(): number {
         return this.itemsPerPage;
@@ -139,7 +137,7 @@ export default Vue.extend({
       },
     },
     compPages(): number {
-      return Math.ceil(this.dreamsStore.getDreamsCount / this.itemsPerPage);
+      return Math.ceil(this.dreamsStore.gDreamsCount / this.itemsPerPage);
     },
   },
   watch: {

@@ -3,12 +3,12 @@
     <div v-if="show">
       <v-tabs
         v-model="compTab"
-        :color="getColors.textColor"
-        :background-color="getColors.backgroundColor"
+        :color="gColors.textColor"
+        :background-color="gColors.backgroundColor"
         :grow="isMobile"
         centered
       >
-        <v-tabs-slider :color="getColors.iconColor"></v-tabs-slider>
+        <v-tabs-slider :color="gColors.iconColor"></v-tabs-slider>
 
         <v-tab v-for="(tab, i) in tabs" :key="tab" @change="handleTabs(i)">
           {{ tab }}
@@ -17,7 +17,7 @@
 
       <v-tabs-items
         v-model="compTab"
-        :style="{ background: getColors.backgroundColor }"
+        :style="{ background: gColors.backgroundColor }"
         touchless
       >
         <v-tab-item transition="slide-y-transition">
@@ -43,7 +43,7 @@ export default Vue.extend({
   name: "DreamsPage",
   created(): void {
     setTimeout(() => (this.show = true), 100);
-    this.selectedTab = this.dreamsStore.getCurrentTab;
+    this.selectedTab = this.dreamsStore.gCurrentTab;
   },
   data: () => ({
     show: false,
@@ -63,13 +63,13 @@ export default Vue.extend({
   },
   computed: {
     ...mapStores(dreamStore),
-    ...mapState(mainStore, ["getColors"]),
+    ...mapState(mainStore, ["gColors"]),
     isMobile(): boolean {
       return this.$vuetify.breakpoint.name === "xs";
     },
     compTab: {
       get(): number {
-        return this.dreamsStore.getCurrentTab;
+        return this.dreamsStore.gCurrentTab;
       },
       set(newVal: number): number {
         return newVal;

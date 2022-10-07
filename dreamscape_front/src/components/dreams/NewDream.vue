@@ -5,14 +5,14 @@
         <v-card
           class="pa-2 ma-auto"
           max-width="800"
-          :color="getColors.topBarColor"
+          :color="gColors.topBarColor"
           hover
         >
           <v-chip
             v-for="(dream, i) of dreams"
             :key="dream + i"
             class="mb-2 mx-1"
-            :style="{ color: getColors.textColor }"
+            :style="{ color: gColors.textColor }"
             @click:close="deleteSubDream(i)"
             outlined
             close
@@ -26,7 +26,7 @@
             label="Dream"
             rows="8"
             :messages="time"
-            :color="getColors.textColor"
+            :color="gColors.textColor"
             outlined
             dense
           ></v-textarea>
@@ -34,8 +34,8 @@
             <v-col cols="12">
               <v-btn
                 @click="addDream(dream)"
-                :color="getColors.backgroundColor | alpha('50%')"
-                :style="{ color: getColors.textColor }"
+                :color="gColors.backgroundColor | alpha('50%')"
+                :style="{ color: gColors.textColor }"
                 block
               >
                 Add Dream
@@ -56,8 +56,8 @@
                   <v-btn
                     v-bind="attrs"
                     v-on="on"
-                    :color="getColors.backgroundColor | alpha('50%')"
-                    :style="{ color: getColors.textColor }"
+                    :color="gColors.backgroundColor | alpha('50%')"
+                    :style="{ color: gColors.textColor }"
                     width="98%"
                   >
                     {{ computedDay }}
@@ -75,8 +75,8 @@
             <v-col cols="6">
               <v-btn
                 @click="openTimeModal"
-                :color="getColors.backgroundColor | alpha('50%')"
-                :style="{ color: getColors.textColor }"
+                :color="gColors.backgroundColor | alpha('50%')"
+                :style="{ color: gColors.textColor }"
                 width="98%"
               >
                 <v-icon>mdi-clock-outline</v-icon>
@@ -87,7 +87,7 @@
         <v-card
           class="pa-2 mt-5 ma-auto"
           max-width="800"
-          :color="getColors.topBarColor"
+          :color="gColors.topBarColor"
           hover
         >
           <v-chip
@@ -105,7 +105,7 @@
             v-model="keywords"
             label="Keywords"
             append-icon="mdi-check"
-            :color="getColors.textColor"
+            :color="gColors.textColor"
             @click:append="addChip(keywords)"
             @keyup.enter="addChip(keywords)"
             outlined
@@ -120,7 +120,7 @@
       <v-btn
         class="mt-5"
         @click="completeDream"
-        :color="getColors.completeBtnColor"
+        :color="gColors.completeBtnColor"
         block
         light
       >
@@ -131,8 +131,8 @@
     <v-snackbar
       v-model="snackbar"
       :timeout="timeout"
-      :style="{ color: getColors.textColor }"
-      :color="getColors.completeBtnColor"
+      :style="{ color: gColors.textColor }"
+      :color="gColors.completeBtnColor"
       bottom
     >
       <template v-slot:action="{ attrs }">
@@ -144,7 +144,7 @@
     </v-snackbar>
 
     <v-dialog v-model="timeModal" max-width="300">
-      <v-card :color="getColors.topBarColor">
+      <v-card :color="gColors.topBarColor">
         <v-card-title>Set Time</v-card-title>
         <v-container>
           <v-text-field ref="time" :value="time" filled outlined>
@@ -152,7 +152,7 @@
           </v-text-field>
           <v-btn
             @click="setNewTime"
-            :color="getColors.completeBtnColor"
+            :color="gColors.completeBtnColor"
             light
             block
           >
@@ -174,7 +174,7 @@ import { dreamStore } from "@/stores/dreams";
 export default Vue.extend({
   name: "NewDream",
   created() {
-    this.date = this.max = this.getDate().slice(0, 10);
+    this.date = this.max = this.gDate().slice(0, 10);
   },
   data: () => ({
     date: "",
@@ -250,7 +250,7 @@ export default Vue.extend({
       if (this.dream.length > 0) this.addDream(this.dream, false);
       if (this.date && this.dreams.length > 0) {
         await this.dreamsStore.addDream({
-          date: this.date + this.getDate().slice(10, 19),
+          date: this.date + this.gDate().slice(10, 19),
           dreams: this.dreams,
           keywords:
             this.chips.length > 0
@@ -277,10 +277,10 @@ export default Vue.extend({
   },
   computed: {
     ...mapStores(mainStore, dreamStore),
-    ...mapState(mainStore, ["getColors", "getDate"]),
+    ...mapState(mainStore, ["gColors", "gDate"]),
     computedDay(): string {
       return this.date
-        ? new Date(this.date + this.getDate().slice(10, 19)).toLocaleString(
+        ? new Date(this.date + this.gDate().slice(10, 19)).toLocaleString(
             "en-US",
             {
               month: "short",
@@ -291,7 +291,7 @@ export default Vue.extend({
     },
     computedDate(): string {
       return this.date
-        ? new Date(this.date + this.getDate().slice(10, 19)).toLocaleString(
+        ? new Date(this.date + this.gDate().slice(10, 19)).toLocaleString(
             "en-US",
             {
               weekday: "short",

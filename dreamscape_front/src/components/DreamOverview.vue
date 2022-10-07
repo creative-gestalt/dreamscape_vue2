@@ -3,7 +3,7 @@
     <v-row>
       <v-col>
         <v-select
-          :items="getYears"
+          :items="gYears"
           v-model="year"
           label="Year"
           outlined
@@ -20,17 +20,17 @@
     </v-row>
     <v-row>
       <v-col :cols="cols" v-for="(month, i) in months" :key="i">
-        <v-sheet :color="getColors.topBarColor">
+        <v-sheet :color="gColors.topBarColor">
           <h3 class="text-center">
             {{ getMonthName(months[i + 1]) }}
           </h3>
           <v-calendar
             ref="calendar[month]"
             v-model="value"
-            :style="{ backgroundColor: getColors.topBarColor }"
+            :style="{ backgroundColor: gColors.topBarColor }"
             :start="month"
             :events="events"
-            :event-color="getColors.completeBtnColor"
+            :event-color="gColors.completeBtnColor"
             :event-overlap-mode="mode"
             :event-overlap-threshold="30"
           ></v-calendar>
@@ -50,8 +50,8 @@ export default Vue.extend({
   name: "DreamOverview",
   async created(): Promise<void> {
     this.cols = this.isMobile ? 12 : 6;
-    this.year = this.mainStore.getDate().slice(0, 4);
-    this.dreamsStore.getDreamDates.forEach((date: string) => {
+    this.year = this.mainStore.gDate().slice(0, 4);
+    this.dreamsStore.gDreamDates.forEach((date: string) => {
       this.events.push({
         name: "",
         start: date,
@@ -78,8 +78,8 @@ export default Vue.extend({
   },
   computed: {
     ...mapStores(mainStore, dreamStore),
-    ...mapState(mainStore, ["getColors"]),
-    ...mapState(dreamStore, ["getYears"]),
+    ...mapState(mainStore, ["gColors"]),
+    ...mapState(dreamStore, ["gYears"]),
     isMobile(): boolean {
       return this.$vuetify.breakpoint.name === "xs";
     },

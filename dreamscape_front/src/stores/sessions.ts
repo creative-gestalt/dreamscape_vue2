@@ -15,8 +15,8 @@ export const sessionStore = defineStore("sessions", {
     currentTab: 0,
   }),
   getters: {
-    getSessions: (state): Session[] => state.sessions,
-    getCurrentTab: (state): number => state.currentTab,
+    gSessions: (state): Session[] => state.sessions,
+    gCurrentTab: (state): number => state.currentTab,
   },
   actions: {
     async getAllSessions(): Promise<void> {
