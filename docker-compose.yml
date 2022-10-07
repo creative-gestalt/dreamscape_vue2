@@ -1,15 +1,14 @@
 version: "3.9"
 services:
   dreamscape_front:
-    build:
-      context: ./dreamscape_front
-      args:
-        APP_USER: ${APP_USER}
-        SERVER_ADDRESS: http://${SERVER_HOST}:${SERVER_PORT}
+    build: ./dreamscape_front
     container_name: dreamscape_front_${APP_USER}
     working_dir: /dreamscape_front
     ports:
       - "${FRONT_PORT}:8080"
+    environment:
+      VUE_APP_APP_USER: ${APP_USER}
+      VUE_APP_SERVER_ADDRESS: http://${SERVER_HOST}:${SERVER_PORT}
     command: serve -s dist -l 8080
     restart: unless-stopped
 
