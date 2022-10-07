@@ -157,14 +157,16 @@
 
 <script lang="ts">
 import Vue from "vue";
-import { mapActions, mapGetters } from "vuex";
 import { Session } from "@/interfaces/session.interface";
+import { mapState, mapStores } from "pinia";
+import { mainStore } from "@/stores/main";
+import { sessionStore } from "@/stores/sessions";
 
 export default Vue.extend({
   name: "ViewSession",
   async created() {
     this.id = String(this.$route.params.id);
-    this.session = await this.getASession({ _id: this.id });
+    this.session = await this.sessionsStore.getASession({ _id: this.id });
     this.sessionTime = this.session.date.slice(10, 19);
     this.session.date = this.session.date.slice(0, 10);
     this.max = this.getDate().slice(0, 10);
@@ -187,7 +189,6 @@ export default Vue.extend({
     editSheet: false,
   }),
   methods: {
-    ...mapActions({ getASession: "getSession" }),
     updateSession(): void {
       this.editSheet = false;
       this.submitSession();
@@ -202,21 +203,22 @@ export default Vue.extend({
       this.submitSession();
     },
     async submitSession(): Promise<void> {
-      await this.$store.dispatch("updateSession", {
+      await this.sessionsStore.updateSession({
         _id: this.id,
         date: this.session.date + this.sessionTime,
         session: this.session.session,
       });
-      await this.$store.dispatch("getAllSessions");
+      await this.sessionsStore.getAllSessions();
     },
     async deleteSession(): Promise<void> {
-      await this.$store.dispatch("deleteSessions", this.session);
-      await this.$store.dispatch("getAllSessions");
+      await this.sessionsStore.deleteSessions(this.session);
+      await this.sessionsStore.getAllSessions();
       await this.$router.push("/sessions");
     },
   },
   computed: {
-    ...mapGetters(["getDate", "getColors"]),
+    ...mapStores(mainStore, sessionStore),
+    ...mapState(mainStore, ["getColors", "getDate"]),
     computedDate(): string {
       return this.session.date
         ? new Date(this.session.date + this.sessionTime).toLocaleString(

@@ -55,12 +55,14 @@
 <script lang="ts">
 import Vue from "vue";
 import { Session } from "@/interfaces/session.interface";
-import { mapGetters } from "vuex";
+import { mapState, mapStores } from "pinia";
+import { mainStore } from "@/stores/main";
+import { sessionStore } from "@/stores/sessions";
 
 export default Vue.extend({
   name: "SessionList",
   created(): void {
-    this.sessions = this.$store.getters.getSessions;
+    this.sessions = this.sessionsStore.getSessions;
   },
   data: () => ({
     pageLoaded: 0,
@@ -74,9 +76,9 @@ export default Vue.extend({
       const total = this.sessions.length;
       if (entries[0].isIntersecting && this.moreAvailable) {
         const skip = this.sessions.length;
-        const limit = this.$store.state.limit;
+        const limit = this.sessionsStore.limit;
         this.pageLoaded++;
-        await this.$store.dispatch("loadMoreSessions", { skip, limit });
+        await this.sessionsStore.loadMoreSessions({ skip, limit });
         if (total === this.sessions.length) this.moreAvailable = false;
       }
     },
@@ -89,7 +91,8 @@ export default Vue.extend({
     },
   },
   computed: {
-    ...mapGetters(["getColors"]),
+    ...mapStores(mainStore, sessionStore),
+    ...mapState(mainStore, ["getColors"]),
   },
 });
 </script>

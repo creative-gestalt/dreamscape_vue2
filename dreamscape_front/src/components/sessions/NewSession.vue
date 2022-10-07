@@ -196,8 +196,10 @@
 
 <script lang="ts">
 import Vue from "vue";
-import { mapGetters } from "vuex";
-import { QA, Session, SessionParts } from "@/interfaces/session.interface";
+import { QA } from "@/interfaces/session.interface";
+import { mapState, mapStores } from "pinia";
+import { mainStore } from "@/stores/main";
+import { sessionStore } from "@/stores/sessions";
 
 export default Vue.extend({
   name: "NewSession",
@@ -253,14 +255,9 @@ export default Vue.extend({
         this.snackText = "Session cannot be empty";
         this.snackbar = true;
       }
-      // this.time = new Date().toLocaleString("en-US", {
-      //   hour: "numeric",
-      //   minute: "numeric",
-      //   hour12: true,
-      // });
     },
     async completeSession(): Promise<void> {
-      await this.$store.dispatch("updateLoading", true);
+      await this.mainStore.updateLoading(true);
       if (
         this.entity.length > 0 &&
         this.question.length > 0 &&
@@ -271,23 +268,24 @@ export default Vue.extend({
           answer: this.answer,
         });
       if (this.date && this.entity.length > 0 && this.qas.length > 0) {
-        await this.$store.dispatch("addSession", {
+        await this.sessionsStore.addSession({
           date: this.date + this.getDate().slice(10, 19),
           session: { entity: this.entity, qas: this.qas, time: this.time },
         });
-        await this.$store.dispatch("getAllSessions");
+        await this.sessionsStore.getAllSessions;
         this.entity = "";
         this.qas = [];
         this.snackText = "Successfully added session";
       } else {
         this.snackText = "No sessions to submit";
       }
-      await this.$store.dispatch("updateLoading", false);
+      await this.mainStore.updateLoading(false);
       this.snackbar = true;
     },
   },
   computed: {
-    ...mapGetters(["getColors", "getDate"]),
+    ...mapStores(mainStore, sessionStore),
+    ...mapState(mainStore, ["getColors", "getDate"]),
     computedDate(): string {
       return this.date
         ? new Date(this.date + this.getDate().slice(10, 19)).toLocaleString(

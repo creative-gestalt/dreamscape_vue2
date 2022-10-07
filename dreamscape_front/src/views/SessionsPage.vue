@@ -35,7 +35,8 @@
 import Vue from "vue";
 import NewSession from "@/components/sessions/NewSession.vue";
 import SessionList from "@/components/sessions/SessionList.vue";
-import { mapGetters } from "vuex";
+import { mapState } from "pinia";
+import { mainStore } from "@/stores/main";
 
 export default Vue.extend({
   name: "SessionsPage",
@@ -53,7 +54,7 @@ export default Vue.extend({
     SessionList,
   },
   computed: {
-    ...mapGetters(["getColors"]),
+    ...mapState(mainStore, ["getColors"]),
     isMobile(): boolean {
       return this.$vuetify.breakpoint.name === "xs";
     },

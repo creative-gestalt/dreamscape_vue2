@@ -118,7 +118,9 @@
 <script lang="ts">
 import Vue from "vue";
 import { Settings } from "@/interfaces/settings.interface";
-import { mapGetters } from "vuex";
+import { mainStore } from "@/stores/main";
+import { mapState, mapStores } from "pinia";
+import { sessionStore } from "@/stores/sessions";
 
 export default Vue.extend({
   name: "Settings",
@@ -127,13 +129,14 @@ export default Vue.extend({
   }),
   methods: {
     async reset(): Promise<void> {
-      await this.$store.dispatch("reset", this.settings);
+      await this.mainStore.reset(this.settings);
     },
   },
   computed: {
-    ...mapGetters(["getSettings", "getColors"]),
+    ...mapStores(mainStore, sessionStore),
+    ...mapState(mainStore, ["getColors"]),
     settings(): Settings {
-      return this.getSettings;
+      return this.mainStore.getSettings;
     },
     isMobile(): boolean {
       return this.$vuetify.breakpoint.name === "xs";
@@ -142,7 +145,7 @@ export default Vue.extend({
   watch: {
     settings: {
       async handler(value: Settings): Promise<void> {
-        await this.$store.dispatch("updateSettings", value);
+        await this.mainStore.updateSettings(value);
       },
       deep: true,
     },

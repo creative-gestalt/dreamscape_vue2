@@ -14,6 +14,7 @@ const url = process.env.SERVER_ADDRESS;
 
 export const sessionStore = defineStore("sessions", {
   state: () => ({
+    limit: 40,
     sessions: [] as Session[],
     currentTab: 0,
   }),

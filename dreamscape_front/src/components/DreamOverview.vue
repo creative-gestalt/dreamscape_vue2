@@ -42,14 +42,16 @@
 
 <script lang="ts">
 import Vue from "vue";
-import { mapGetters } from "vuex";
+import { mainStore } from "@/stores/main";
+import { dreamStore } from "@/stores/dreams";
+import { mapState, mapStores } from "pinia";
 
 export default Vue.extend({
   name: "DreamOverview",
   async created(): Promise<void> {
     this.cols = this.isMobile ? 12 : 6;
-    this.year = this.getDate().slice(0, 4);
-    this.getDreamDates.forEach((date: string) => {
+    this.year = this.mainStore.getDate().slice(0, 4);
+    this.dreamsStore.getDreamDates.forEach((date: string) => {
       this.events.push({
         name: "",
         start: date,
@@ -75,7 +77,8 @@ export default Vue.extend({
     },
   },
   computed: {
-    ...mapGetters(["getDate", "getYears", "getDreamDates", "getColors"]),
+    ...mapStores(mainStore, dreamStore),
+    ...mapState(mainStore, ["getColors", "getYears"]),
     isMobile(): boolean {
       return this.$vuetify.breakpoint.name === "xs";
     },
