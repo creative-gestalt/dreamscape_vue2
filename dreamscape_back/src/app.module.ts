@@ -5,12 +5,13 @@ import { SessionsModule } from './dreamscape-sessions/sessions.module';
 import { SettingsModule } from './dreamscape-settings/settings.module';
 
 const url = '192.168.1.250'; // production
+const port = '270178';
 // const url = 'localhost';
 
 @Module({
   imports: [
     MongooseModule.forRoot(
-      `mongodb://${process.env.DB_USER}:${process.env.DB_PASS}@${url}/dreamscape`,
+      `mongodb://${process.env.DB_USER}:${process.env.DB_PASS}@${url}:${port}/dreamscape`,
       {
         useNewUrlParser: true,
       },
