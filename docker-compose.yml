@@ -6,8 +6,6 @@ services:
     working_dir: /dreamscape_front
     ports:
       - "8081:8080"
-    environment:
-      MONGODB_CONNSTRING: mongodb://${DB_USER}:${DB_PASS}@mongodb:27018
     command: serve -s dist -l 8080
     restart: unless-stopped
 
@@ -17,8 +15,6 @@ services:
     working_dir: /dreamscape_front
     ports:
       - "8000:8080"
-    environment:
-      MONGODB_CONNSTRING: mongodb://${DB_USER}:${DB_PASS}@mongodb:27018
     command: serve -s dist -l 8080
     restart: unless-stopped
 
@@ -28,6 +24,8 @@ services:
     working_dir: /dreamscape_back
     ports:
       - "3001:3000"
+    environment:
+      MONGODB_CONNSTRING: mongodb://${DB_USER}:${DB_PASS}@mongodb:27018
     command: node dist/main
     restart: unless-stopped
     links:
