@@ -35,6 +35,9 @@ services:
     image: mongo:5.0
     container_name: mongo_ds
     environment:
+      DB_USER: ${DB_USER}
+      DB_PWD: ${DB_PWD}
+      INIT_DB: ${INIT_DB}
       MONGO_INITDB_ROOT_USERNAME: ${DB_ROOT_USER}
       MONGO_INITDB_ROOT_PASSWORD: ${DB_ROOT_PWD}
     ports:
