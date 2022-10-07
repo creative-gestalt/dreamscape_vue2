@@ -44,16 +44,7 @@ export default new Vuex.Store({
   state: () => initialState(),
   mutations: {
     RESET(state: State) {
-      state.settings = {
-        _id: state.settings._id,
-        colors: {
-          topBarColor: "#333333",
-          backgroundColor: "#111111",
-          iconColor: "#000000",
-          textColor: "#fff",
-          completeBtnColor: "#007707",
-        },
-      };
+      state
     },
     // Dreams mutations
     SET_DREAMS(state: State, payload: Dream[]): void {
