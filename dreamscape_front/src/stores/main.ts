@@ -2,14 +2,13 @@ import piniaPluginPersistedstate from "pinia-plugin-persistedstate";
 import { createPinia, defineStore } from "pinia";
 import { Colors, Settings } from "@/interfaces/settings.interface";
 import { sleep } from "@/utils/constants";
+import { server } from "@/utils/server";
 import axios from "axios";
 
 export const pinia = createPinia();
 pinia.use(piniaPluginPersistedstate);
 
-const url = process.env.SERVER_ADDRESS;
-console.log(url);
-axios.defaults.headers.common = { "requested-from": process.env.APP_USER };
+axios.defaults.headers.common = { "requested-from": server.baseUser };
 
 export const mainStore = defineStore("main", {
   state: () => ({
@@ -47,20 +46,26 @@ export const mainStore = defineStore("main", {
           completeBtnColor: "#007707",
         },
       };
-      await axios.put(`${url}/updateSettings/${payload._id}`, this.settings);
+      await axios.put(
+        `${server.baseURL}/updateSettings/${payload._id}`,
+        this.settings
+      );
     },
     async getSettings(): Promise<void> {
-      const settings = (await axios.get(`${url}/getSettings`)).data;
+      const settings = (await axios.get(`${server.baseURL}/getSettings`)).data;
       if (settings) this.settings = settings;
     },
     async updateSettings(payload: Settings): Promise<void> {
       if (!payload._id) {
         this.settings = (
-          await axios.post(`${url}/createSettings`, payload)
+          await axios.post(`${server.baseURL}/createSettings`, payload)
         ).data[0];
       } else {
         this.settings = (
-          await axios.put(`${url}/updateSettings/${payload._id}`, payload)
+          await axios.put(
+            `${server.baseURL}/updateSettings/${payload._id}`,
+            payload
+          )
         ).data[0];
       }
     },
