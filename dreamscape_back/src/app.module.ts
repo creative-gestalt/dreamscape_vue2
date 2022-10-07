@@ -6,12 +6,9 @@ import { SettingsModule } from './dreamscape-settings/settings.module';
 
 @Module({
   imports: [
-    MongooseModule.forRoot(
-      `mongodb://${process.env.MONGODB_CONNSTRING}/dreamscape`,
-      {
-        useNewUrlParser: true,
-      },
-    ),
+    MongooseModule.forRoot(`${process.env.MONGODB_CONNSTRING}/dreamscape`, {
+      useNewUrlParser: true,
+    }),
     DreamsModule,
     SessionsModule,
     SettingsModule,
