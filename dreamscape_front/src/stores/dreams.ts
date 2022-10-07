@@ -8,6 +8,7 @@ export const pinia = createPinia();
 pinia.use(piniaPluginPersistedstate);
 
 const url = process.env.SERVER_ADDRESS;
+console.log(url);
 axios.defaults.headers.common = { "requested-from": process.env.APP_USER };
 
 export const dreamStore = defineStore("dreams", {
