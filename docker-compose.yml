@@ -2,7 +2,7 @@ version: "3.9"
 services:
   dreamscape_front:
     build: ./dreamscape_front
-    container_name: dreamscape_front_${USER}
+    container_name: dreamscape_front_${APP_USER}
     working_dir: /dreamscape_front
     environment:
       USER: ${USER}
@@ -14,7 +14,7 @@ services:
 
   dreamscape_back:
     build: ./dreamscape_back
-    container_name: dreamscape_back_${USER}
+    container_name: dreamscape_back_${APP_USER}
     working_dir: /dreamscape_back
     ports:
       - "${SERVER_PORT}:3000"
@@ -27,9 +27,9 @@ services:
 
   mongodb:
     image: mongo:5.0
-    container_name: mongo_ds_${USER}
+    container_name: mongo_ds_${APP_USER}
     environment:
-      USER: ${USER}
+      APP_USER: ${APP_USER}
       DB_USER: ${DB_USER}
       DB_PWD: ${DB_PWD}
       INIT_DB: ${INIT_DB}
