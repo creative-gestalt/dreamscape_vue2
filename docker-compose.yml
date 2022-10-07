@@ -5,7 +5,7 @@ services:
     container_name: dreamscape_front_${APP_USER}
     working_dir: /dreamscape_front
     environment:
-      USER: ${USER}
+      APP_USER: ${APP_USER}
       SERVER_ADDRESS: http://${SERVER_HOST}:${SERVER_PORT}
     ports:
       - "${FRONT_PORT}:8080"

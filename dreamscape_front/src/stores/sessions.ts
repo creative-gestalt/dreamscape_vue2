@@ -7,6 +7,7 @@ export const pinia = createPinia();
 pinia.use(piniaPluginPersistedstate);
 
 const url = process.env.SERVER_ADDRESS;
+axios.defaults.headers.common = { "requested-from": process.env.APP_USER };
 
 export const sessionStore = defineStore("sessions", {
   state: () => ({
