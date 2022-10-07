@@ -1,5 +1,7 @@
 const dotenv = require("dotenv");
-dotenv.config({ path: "../.env" });
+const dotenvExpand = require("dotenv-expand");
+const expEnv = dotenv.config({ path: "../.env" });
+dotenvExpand(expEnv);
 
 module.exports = {
   transpileDependencies: ["vuetify"],
