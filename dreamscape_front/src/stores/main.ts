@@ -12,7 +12,6 @@ const url = process.env.SERVER_ADDRESS;
 
 export const mainStore = defineStore("main", {
   state: () => ({
-    dates: [] as string[],
     settings: {
       colors: {
         topBarColor: "#333333",
@@ -56,7 +55,6 @@ export const mainStore = defineStore("main", {
       };
       await axios.put(`${url}/updateSettings/${payload._id}`, this.settings);
     },
-    // Settings requests
     async getSettings(): Promise<void> {
       const settings = (await axios.get(`${url}/getSettings`)).data;
       if (settings) this.settings = settings;
