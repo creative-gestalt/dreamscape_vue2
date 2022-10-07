@@ -1,7 +1,7 @@
 FROM node:lts-alpine as build-stage
 WORKDIR /dreamscape_front
 COPY package.json ./
-RUN npm set progress=false && npm install
+RUN npm set progress=false && npm install --legacy-peer-deps
 COPY . .
 RUN npm run build
 
