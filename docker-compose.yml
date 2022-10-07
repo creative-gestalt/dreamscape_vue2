@@ -39,5 +39,5 @@ services:
       - "${DB_PORT}:27017"
     volumes:
       - ./data:/data/db
-      - ./mongo/init-mongo.js:/docker-entrypoint-initdb.d/init-mongo.js:ro
+      - ./mongo-entrypoint:/docker-entrypoint-initdb.d:ro
     restart: unless-stopped
