@@ -14,8 +14,8 @@ db.createUser({
     ]
 })
 
-db.createCollection("dreams-$APP_USER")
-db.createCollection("sessions")
-db.createCollection("settings")
+db.createCollection("dreams-$APP_USER", { capped: false })
+db.createCollection("sessions", { capped: false })
+db.createCollection("settings", { capped: false })
 
 EOF
