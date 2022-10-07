@@ -7,8 +7,6 @@ import axios from "axios";
 export const pinia = createPinia();
 pinia.use(piniaPluginPersistedstate);
 
-axios.defaults.headers.common = { "requested-from": server.baseUser };
-
 export const sessionStore = defineStore("sessions", {
   state: () => ({
     limit: 40,

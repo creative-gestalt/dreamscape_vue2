@@ -5,7 +5,6 @@ import {
   HttpStatus,
   NotFoundException,
   Param,
-  Headers,
   Post,
   Put,
   Query,
@@ -21,14 +20,10 @@ export class SessionController {
   constructor(private readonly sessionsService: SessionsService) {}
 
   @Get('getSessions/:params')
-  async getSessions(
-    @Res() res,
-    @Param('params') params,
-    @Headers('requested-from') user,
-  ) {
+  async getSessions(@Res() res, @Param('params') params) {
     const skip = Number(params.split('-')[0]);
     const limit = Number(params.split('-')[1]);
-    const sessions = await this.sessionsService.getSessions(user, skip, limit);
+    const sessions = await this.sessionsService.getSessions(skip, limit);
     return res.status(HttpStatus.OK).json(sessions);
   }
 

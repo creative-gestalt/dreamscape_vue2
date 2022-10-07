@@ -4,7 +4,6 @@ services:
     build:
       context: ./dreamscape_front
       args:
-        APP_USER: ${APP_USER}
         SERVER_ADDRESS: http://${SERVER_HOST}:${SERVER_PORT}
     container_name: dreamscape_front_${APP_USER}
     working_dir: /dreamscape_front
@@ -30,7 +29,6 @@ services:
     image: mongo:5.0
     container_name: mongo_ds_${APP_USER}
     environment:
-      APP_USER: ${APP_USER}
       DB_USER: ${DB_USER}
       DB_PWD: ${DB_PWD}
       INIT_DB: ${INIT_DB}
@@ -40,5 +38,5 @@ services:
       - "${DB_PORT}:27017"
     volumes:
       - ./data:/data/db
-      - ./mongo-entrypoint:/docker-entrypoint-initdb.d:ro
+      - ./init-mongodb:/docker-entrypoint-initdb.d:ro
     restart: unless-stopped

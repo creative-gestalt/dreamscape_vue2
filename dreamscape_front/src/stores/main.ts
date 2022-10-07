@@ -8,8 +8,6 @@ import axios from "axios";
 export const pinia = createPinia();
 pinia.use(piniaPluginPersistedstate);
 
-axios.defaults.headers.common = { "requested-from": server.baseUser };
-
 export const mainStore = defineStore("main", {
   state: () => ({
     settings: {

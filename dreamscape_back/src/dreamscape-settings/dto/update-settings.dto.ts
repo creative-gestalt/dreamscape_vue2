@@ -6,5 +6,4 @@ export class UpdateSettingsDto {
     readonly textColor: string;
     readonly completeBtnColor: string;
   };
-  readonly user: string;
 }

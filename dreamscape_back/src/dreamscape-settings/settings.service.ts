@@ -10,8 +10,8 @@ export class SettingsService {
     @InjectModel('Settings') private readonly settingsModel: Model<Settings>,
   ) {}
 
-  async getSettings(user): Promise<any> {
-    return this.settingsModel.findOne({ user: user }).exec();
+  async getSettings(): Promise<any> {
+    return this.settingsModel.findOne().exec();
   }
 
   async updateSettings(

@@ -10,9 +10,9 @@ export class SessionsService {
     @InjectModel('Sessions') private readonly sessionModel: Model<Session>,
   ) {}
 
-  async getSessions(user, skip, limit): Promise<Session[]> {
+  async getSessions(skip, limit): Promise<Session[]> {
     return await this.sessionModel
-      .find({ user: user })
+      .find()
       .sort({ date: 'desc' })
       .skip(skip)
       .limit(limit)

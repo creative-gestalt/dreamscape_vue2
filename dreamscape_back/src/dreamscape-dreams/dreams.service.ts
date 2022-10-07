@@ -7,25 +7,11 @@ import { AddDreamDto } from './dto/add-dream.dto';
 @Injectable()
 export class DreamsService {
   constructor(
-    @InjectModel('Dreams-Nick') private readonly nickModel: Model<Dream>,
-    @InjectModel('Dreams-Lydia') private readonly lydiaModel: Model<Dream>,
+    @InjectModel('Dreams') private readonly dreamModel: Model<Dream>,
   ) {}
 
-  getModel(user): any {
-    let model = Model;
-    switch (user) {
-      case 'nick':
-        model = this.nickModel;
-        break;
-      case 'lydia':
-        model = this.lydiaModel;
-        break;
-    }
-    return model;
-  }
-
-  async getDreams(user, skip, limit): Promise<Dream[]> {
-    return await this.getModel(user)
+  async getDreams(skip, limit): Promise<Dream[]> {
+    return await this.dreamModel
       .find()
       .sort({ date: 'desc' })
       .skip(skip)
@@ -33,16 +19,16 @@ export class DreamsService {
       .exec();
   }
 
-  async getAllDreams(user): Promise<Dream[]> {
-    return await this.getModel(user).find().exec();
+  async getAllDreams(): Promise<Dream[]> {
+    return await this.dreamModel.find().exec();
   }
 
-  async getDream(user, dreamID): Promise<Dream> {
-    return await this.getModel(user).findById(dreamID).exec();
+  async getDream(dreamID): Promise<Dream> {
+    return await this.dreamModel.findById(dreamID).exec();
   }
 
-  async searchDreams(user, target): Promise<Dream[]> {
-    return await this.getModel(user)
+  async searchDreams(target): Promise<Dream[]> {
+    return await this.dreamModel
       .find({
         $or: [
           {
@@ -69,23 +55,16 @@ export class DreamsService {
       .exec();
   }
 
-  async addDream(
-    user,
-    addDreamDto: AddDreamDto,
-  ): Promise<HydratedDocument<Dream>[]> {
-    return await this.getModel(user).insertMany(addDreamDto);
+  async addDream(addDreamDto: AddDreamDto): Promise<HydratedDocument<Dream>[]> {
+    return await this.dreamModel.insertMany(addDreamDto);
   }
 
-  async deleteDreams(user, dreams): Promise<any> {
-    return this.getModel(user).deleteMany({ _id: { $in: dreams } });
+  async deleteDreams(dreams): Promise<any> {
+    return this.dreamModel.deleteMany({ _id: { $in: dreams } });
   }
 
-  async updateDream(
-    user,
-    dreamID: string,
-    addDreamDto: AddDreamDto,
-  ): Promise<Dream> {
-    return this.getModel(user).findByIdAndUpdate(dreamID, addDreamDto, {
+  async updateDream(dreamID: string, addDreamDto: AddDreamDto): Promise<Dream> {
+    return this.dreamModel.findByIdAndUpdate(dreamID, addDreamDto, {
       new: true,
     });
   }

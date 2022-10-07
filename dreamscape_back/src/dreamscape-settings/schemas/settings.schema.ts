@@ -8,5 +8,4 @@ export const SettingsSchema = new mongoose.Schema({
     textColor: String,
     completeBtnColor: String,
   },
-  user: String,
 });

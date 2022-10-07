@@ -8,5 +8,4 @@ export interface Settings extends Document {
     readonly textColor: string;
     readonly completeBtnColor: string;
   };
-  readonly user: string;
 }

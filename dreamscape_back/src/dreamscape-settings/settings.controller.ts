@@ -4,7 +4,6 @@ import {
   Get,
   HttpStatus,
   Param,
-  Headers,
   Post,
   Put,
   Res,
@@ -18,8 +17,8 @@ export class SettingsController {
   constructor(private readonly settingsService: SettingsService) {}
 
   @Get('getSettings')
-  async getSettings(@Res() res, @Headers('requested-from') user) {
-    const settings = await this.settingsService.getSettings(user);
+  async getSettings(@Res() res) {
+    const settings = await this.settingsService.getSettings();
     return res.status(HttpStatus.OK).json(settings);
   }
 
