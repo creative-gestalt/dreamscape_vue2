@@ -1,5 +1,9 @@
 # Dreamscape
 
+## Visiting the application
+Once this is running, you can visit the site via the host's IP or hostname + the frontend port you set:<br />
+ex: `http://192.168.0.105:8080/`
+
 ## Installation
 
 _prerequisites:_
