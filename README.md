@@ -57,6 +57,8 @@ _root dir_
 ~/dreamscape$ docker compose up -d --build
 ```
 
+### That's it. For any tweaking or data management, continue.
+
 ## Updating
 
 If you change any `.env` variables, be sure to run `$ docker compose up -d --build`to force copying files into the
