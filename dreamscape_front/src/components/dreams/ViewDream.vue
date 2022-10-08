@@ -16,7 +16,7 @@
     <v-card class="ma-auto mb-16" :color="gColors.topBarColor" max-width="800">
       <v-container class="pb-0 mb-n2">
         <v-row align="center" justify="center" no-gutters>
-          <v-col cols="9">
+          <v-col cols="8">
             <v-menu
               ref="menu"
               v-model="menu"
@@ -46,7 +46,7 @@
               ></v-date-picker>
             </v-menu>
           </v-col>
-          <v-col cols="3" class="d-flex justify-center">
+          <v-col cols="4" class="d-flex justify-center">
             <v-fade-transition>
               <v-btn v-if="edit" class="mr-3" @click="edit = false" icon>
                 <v-icon color="orange"> mdi-window-close </v-icon>
