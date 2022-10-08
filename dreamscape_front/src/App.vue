@@ -1,6 +1,6 @@
 <template>
-  <v-app id="app" :style="{ background: backgroundColor }">
-    <v-app-bar :color="topBarColor" :height="isIOS ? 90 : 56" dark app>
+  <v-app id="app" :style="{ background: gColors.backgroundColor }">
+    <v-app-bar :color="gColors.topBarColor" :height="isIOS ? 90 : 56" dark app>
       <div class="d-flex align-center pr-5">
         <v-img
           class="ml-3"
@@ -12,7 +12,7 @@
       <v-app-bar-title
         class="text-no-wrap"
         :style="{
-          color: iconColor,
+          color: gColors.iconColor,
           transform: isIOS ? 'translateY(20px)' : '',
         }"
       >
@@ -23,16 +23,16 @@
 
       <div v-if="!isMobile">
         <v-btn to="/dreams" text>
-          <v-icon :color="iconColor"> mdi-sleep </v-icon>
+          <v-icon :color="gColors.iconColor"> mdi-sleep </v-icon>
         </v-btn>
         <v-btn to="/sessions" text>
-          <v-icon :color="iconColor"> mdi-notebook </v-icon>
+          <v-icon :color="gColors.iconColor"> mdi-notebook </v-icon>
         </v-btn>
         <v-btn to="/dream-overview" text>
-          <v-icon :color="iconColor">mdi-calendar</v-icon>
+          <v-icon :color="gColors.iconColor">mdi-calendar</v-icon>
         </v-btn>
         <v-btn to="/settings" text>
-          <v-icon :color="iconColor"> mdi-cog-outline </v-icon>
+          <v-icon :color="gColors.iconColor"> mdi-cog-outline </v-icon>
         </v-btn>
       </div>
     </v-app-bar>
@@ -46,7 +46,7 @@
 
     <v-bottom-navigation
       v-if="isMobile"
-      :background-color="topBarColor"
+      :background-color="gColors.topBarColor"
       color="transparent"
       :min-height="fullscreenBuffer"
       grow
@@ -55,26 +55,28 @@
       app
     >
       <v-btn :class="paddingClass" to="/dreams">
-        <span :class="marginClass" :style="{ color: iconColor }"> Dreams </span>
-        <v-icon :color="iconColor">mdi-sleep</v-icon>
+        <span :class="marginClass" :style="{ color: gColors.iconColor }">
+          Dreams
+        </span>
+        <v-icon :color="gColors.iconColor">mdi-sleep</v-icon>
       </v-btn>
       <v-btn :class="paddingClass" to="/sessions">
-        <span :class="marginClass" :style="{ color: iconColor }">
+        <span :class="marginClass" :style="{ color: gColors.iconColor }">
           Sessions
         </span>
-        <v-icon :color="iconColor"> mdi-notebook </v-icon>
+        <v-icon :color="gColors.iconColor"> mdi-notebook </v-icon>
       </v-btn>
       <v-btn :class="paddingClass" to="/dream-overview">
-        <span :class="marginClass" :style="{ color: iconColor }">
+        <span :class="marginClass" :style="{ color: gColors.iconColor }">
           Overview
         </span>
-        <v-icon :color="iconColor"> mdi-calendar </v-icon>
+        <v-icon :color="gColors.iconColor"> mdi-calendar </v-icon>
       </v-btn>
       <v-btn :class="paddingClass" to="/settings">
-        <span :class="marginClass" :style="{ color: iconColor }">
+        <span :class="marginClass" :style="{ color: gColors.iconColor }">
           Settings
         </span>
-        <v-icon :color="iconColor"> mdi-cog-outline </v-icon>
+        <v-icon :color="gColors.iconColor"> mdi-cog-outline </v-icon>
       </v-btn>
     </v-bottom-navigation>
   </v-app>
@@ -110,11 +112,7 @@ export default Vue.extend({
   },
   computed: {
     ...mapStores(useMainStore, useDreamStore, useSessionStore),
-    ...mapState(useMainStore, {
-      backgroundColor: (store) => store.gColors.backgroundColor,
-      iconColor: (store) => store.gColors.iconColor,
-      topBarColor: (store) => store.gColors.topBarColor,
-    }),
+    ...mapState(useMainStore, ["gColors", "gLoading"]),
     isMobile(): boolean {
       return this.$vuetify.breakpoint.name === "xs";
     },
