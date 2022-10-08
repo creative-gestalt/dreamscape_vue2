@@ -9,6 +9,7 @@ _prerequisites:_
 You can run this on windows docker or linux. Linux is preferred.
 
 _Linux_
+
 ```bash
 ~$ git clone <this-repo>
 ~$ cd dreamscape/
@@ -16,6 +17,7 @@ _Linux_
 ```
 
 _Windows_
+
 ```
 PS C:\Users\<you>\projects> git clone <this-repo>
 PS C:\Users\<you>\projects\dreamscape> New-Item .env
@@ -78,16 +80,22 @@ mongodb://{DB_ROOT_USER}:{DB_ROOT_PWD}@{SERVER_HOST}:{DB_PORT}/
 ex: `mongodb://root:root@192.168.0.105:27017/`
 
 ## Backup & Restore
+
 ### Backup
+
 If you want to run a cron to maintain backups or just want to run it via command:
+
 ```
 mongodump --uri="mongodb://{DB_USER}:{DB_PWD}@{SERVER_HOST}:{DB_PORT}" --db={INIT_DB} --out=/home/<you>/db/
 ```
+
 ex: `mongodump --uri="mongodb://dreamscape_usr:dreamscape_pwd@192.168.0.105:27017" --db=dreamscape_db --out=/home/nick/db/`
 
 ### Restore
+
 ```
 mongorestore --host={SERVER_HOST} --port={DB_PORT} --username={DB_USER} --password={DB_PWD} --authenticationDatabase={INIT_DB} /path/to/any-dir/
 ```
+
 ex: `mongorestore --host=192.168.0.105 --port=27017 --username=dreamscape_usr --password=dreamscape_pwd --authenticationDatabase=dreamscape_db /home/nick/db/`
 
