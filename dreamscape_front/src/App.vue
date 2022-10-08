@@ -86,21 +86,21 @@
 import Vue from "vue";
 import { useDreamStore } from "@/stores/dreams";
 import { useSessionStore } from "@/stores/sessions";
-import { mapState, mapStores } from "pinia";
+import { mapActions, mapState } from "pinia";
 import { useMainStore } from "@/stores/main";
 
 export default Vue.extend({
   name: "App",
   async mounted(): Promise<void> {
-    await this.mainStore.getSettings();
+    await this.getSettings();
   },
   async created(): Promise<void> {
-    await this.dreamsStore.getDreamsForPage({
+    await this.getDreamsForPage({
       skip: 0,
       limit: 13,
     });
-    await this.dreamsStore.getDreamDates();
-    await this.sessionsStore.getAllSessions();
+    await this.getDreamDates();
+    await this.getAllSessions();
   },
   data: () => ({
     bottomNavHeight: 56,
@@ -108,10 +108,11 @@ export default Vue.extend({
     marginClass: "",
   }),
   methods: {
-    //
+    ...mapActions(useMainStore, ["getSettings"]),
+    ...mapActions(useDreamStore, ["getDreamDates"]),
+    ...mapActions(useSessionStore, ["getAllSessions"]),
   },
   computed: {
-    ...mapStores(useMainStore, useDreamStore, useSessionStore),
     ...mapState(useMainStore, ["gColors", "gLoading"]),
     isMobile(): boolean {
       return this.$vuetify.breakpoint.name === "xs";
