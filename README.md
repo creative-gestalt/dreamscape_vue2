@@ -71,7 +71,7 @@ mongodb://{DB_USER}:{DB_PWD}@{SERVER_HOST}:{DB_PORT}/{INIT_DB}
 
 ex: `mongodb://dreamscape_usr:dreamscape_pwd@192.168.0.105:27017/dreamscape_db`
 
-<br />If you want to view all collections, use the root user / pwd without a collection specified:
+<br />If you want to view all database, use the root user / pwd without a database specified:
 
 ```
 mongodb://{DB_ROOT_USER}:{DB_ROOT_PWD}@{SERVER_HOST}:{DB_PORT}/
