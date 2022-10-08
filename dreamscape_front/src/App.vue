@@ -123,8 +123,6 @@ export default Vue.extend({
   },
   data: () => ({
     bottomNavHeight: 56,
-    paddingClass: "",
-    marginClass: "",
   }),
   methods: {
     ...mapActions(useMainStore, ["getSettings"]),
@@ -141,7 +139,14 @@ export default Vue.extend({
       return this.fullscreenBuffer === 80;
     },
     fullscreenBuffer(): number {
+      // return 80;
       return navigator.platform.match(/iPhone|iPod|iPad/) ? 80 : 56;
+    },
+    paddingClass(): string {
+      return this.isIOS ? "pb-8" : "";
+    },
+    marginClass(): string {
+      return this.isIOS ? "mt-n3" : "";
     },
   },
 });
