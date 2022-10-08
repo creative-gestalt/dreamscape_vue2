@@ -56,8 +56,8 @@
 import Vue from "vue";
 import { Session } from "@/interfaces/session.interface";
 import { mapState, mapStores } from "pinia";
-import { mainStore } from "@/stores/main";
-import { sessionStore } from "@/stores/sessions";
+import { useMainStore } from "@/stores/main";
+import { useSessionStore } from "@/stores/sessions";
 
 export default Vue.extend({
   name: "SessionList",
@@ -91,8 +91,8 @@ export default Vue.extend({
     },
   },
   computed: {
-    ...mapStores(mainStore, sessionStore),
-    ...mapState(mainStore, ["gColors"]),
+    ...mapStores(useMainStore, useSessionStore),
+    ...mapState(useMainStore, ["gColors"]),
   },
 });
 </script>

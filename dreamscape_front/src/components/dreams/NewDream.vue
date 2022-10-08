@@ -168,8 +168,8 @@
 import Vue from "vue";
 import { SubDream } from "@/interfaces/dream.interface";
 import { mapState, mapStores } from "pinia";
-import { mainStore } from "@/stores/main";
-import { dreamStore } from "@/stores/dreams";
+import { useMainStore } from "@/stores/main";
+import { useDreamStore } from "@/stores/dreams";
 
 export default Vue.extend({
   name: "NewDream",
@@ -276,8 +276,8 @@ export default Vue.extend({
     },
   },
   computed: {
-    ...mapStores(mainStore, dreamStore),
-    ...mapState(mainStore, ["gColors", "gDate"]),
+    ...mapStores(useMainStore, useDreamStore),
+    ...mapState(useMainStore, ["gColors", "gDate"]),
     computedDay(): string {
       return this.date
         ? new Date(this.date + this.gDate().slice(10, 19)).toLocaleString(

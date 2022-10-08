@@ -7,7 +7,7 @@ import axios from "axios";
 export const pinia = createPinia();
 pinia.use(piniaPluginPersistedstate);
 
-export const sessionStore = defineStore("sessions", {
+export const useSessionStore = defineStore("sessions", {
   state: () => ({
     limit: 40,
     sessions: [] as Session[],

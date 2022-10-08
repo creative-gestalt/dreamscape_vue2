@@ -118,9 +118,9 @@
 <script lang="ts">
 import Vue from "vue";
 import { Settings } from "@/interfaces/settings.interface";
-import { mainStore } from "@/stores/main";
+import { useMainStore } from "@/stores/main";
 import { mapState, mapStores } from "pinia";
-import { sessionStore } from "@/stores/sessions";
+import { useSessionStore } from "@/stores/sessions";
 
 export default Vue.extend({
   name: "SettingsComponent",
@@ -133,8 +133,8 @@ export default Vue.extend({
     },
   },
   computed: {
-    ...mapStores(mainStore, sessionStore),
-    ...mapState(mainStore, ["gColors"]),
+    ...mapStores(useMainStore, useSessionStore),
+    ...mapState(useMainStore, ["gColors"]),
     settings(): Settings {
       return this.mainStore.settings;
     },

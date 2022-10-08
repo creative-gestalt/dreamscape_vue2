@@ -73,8 +73,8 @@
 import Vue from "vue";
 import { Dream } from "@/interfaces/dream.interface";
 import { mapState, mapStores } from "pinia";
-import { mainStore } from "@/stores/main";
-import { dreamStore } from "@/stores/dreams";
+import { useMainStore } from "@/stores/main";
+import { useDreamStore } from "@/stores/dreams";
 
 export default Vue.extend({
   name: "DreamList",
@@ -125,9 +125,9 @@ export default Vue.extend({
     },
   },
   computed: {
-    ...mapStores(mainStore, dreamStore),
-    ...mapState(mainStore, ["gColors"]),
-    ...mapState(dreamStore, ["gDreams", "gDreamsCount"]),
+    ...mapStores(useMainStore, useDreamStore),
+    ...mapState(useMainStore, ["gColors"]),
+    ...mapState(useDreamStore, ["gDreams", "gDreamsCount"]),
     compItemsPerPage: {
       get(): number {
         return this.itemsPerPage;

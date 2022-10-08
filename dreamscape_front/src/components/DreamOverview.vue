@@ -42,8 +42,8 @@
 
 <script lang="ts">
 import Vue from "vue";
-import { mainStore } from "@/stores/main";
-import { dreamStore } from "@/stores/dreams";
+import { useMainStore } from "@/stores/main";
+import { useDreamStore } from "@/stores/dreams";
 import { mapState, mapStores } from "pinia";
 
 export default Vue.extend({
@@ -77,9 +77,9 @@ export default Vue.extend({
     },
   },
   computed: {
-    ...mapStores(mainStore, dreamStore),
-    ...mapState(mainStore, ["gColors"]),
-    ...mapState(dreamStore, ["gYears"]),
+    ...mapStores(useMainStore, useDreamStore),
+    ...mapState(useMainStore, ["gColors"]),
+    ...mapState(useDreamStore, ["gYears"]),
     isMobile(): boolean {
       return this.$vuetify.breakpoint.name === "xs";
     },

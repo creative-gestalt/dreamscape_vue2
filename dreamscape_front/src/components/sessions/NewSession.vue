@@ -198,8 +198,8 @@
 import Vue from "vue";
 import { QA } from "@/interfaces/session.interface";
 import { mapState, mapStores } from "pinia";
-import { mainStore } from "@/stores/main";
-import { sessionStore } from "@/stores/sessions";
+import { useMainStore } from "@/stores/main";
+import { useSessionStore } from "@/stores/sessions";
 
 export default Vue.extend({
   name: "NewSession",
@@ -284,8 +284,8 @@ export default Vue.extend({
     },
   },
   computed: {
-    ...mapStores(mainStore, sessionStore),
-    ...mapState(mainStore, ["gColors", "gDate"]),
+    ...mapStores(useMainStore, useSessionStore),
+    ...mapState(useMainStore, ["gColors", "gDate"]),
     computedDate(): string {
       return this.date
         ? new Date(this.date + this.gDate().slice(10, 19)).toLocaleString(

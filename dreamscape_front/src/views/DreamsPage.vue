@@ -35,9 +35,9 @@
 import Vue from "vue";
 import NewDream from "../components/dreams/NewDream.vue";
 import DreamList from "../components/dreams/DreamList.vue";
-import { mainStore } from "@/stores/main";
+import { useMainStore } from "@/stores/main";
 import { mapState, mapStores } from "pinia";
-import { dreamStore } from "@/stores/dreams";
+import { useDreamStore } from "@/stores/dreams";
 
 export default Vue.extend({
   name: "DreamsPage",
@@ -62,8 +62,8 @@ export default Vue.extend({
     },
   },
   computed: {
-    ...mapStores(dreamStore),
-    ...mapState(mainStore, ["gColors"]),
+    ...mapStores(useDreamStore),
+    ...mapState(useMainStore, ["gColors"]),
     isMobile(): boolean {
       return this.$vuetify.breakpoint.name === "xs";
     },

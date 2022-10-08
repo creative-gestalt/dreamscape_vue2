@@ -82,10 +82,10 @@
 
 <script lang="ts">
 import Vue from "vue";
-import { dreamStore } from "@/stores/dreams";
-import { sessionStore } from "@/stores/sessions";
+import { useDreamStore } from "@/stores/dreams";
+import { useSessionStore } from "@/stores/sessions";
 import { mapState, mapStores } from "pinia";
-import { mainStore } from "@/stores/main";
+import { useMainStore } from "@/stores/main";
 
 export default Vue.extend({
   name: "App",
@@ -109,8 +109,8 @@ export default Vue.extend({
     //
   },
   computed: {
-    ...mapStores(mainStore, dreamStore, sessionStore),
-    ...mapState(mainStore, {
+    ...mapStores(useMainStore, useDreamStore, useSessionStore),
+    ...mapState(useMainStore, {
       backgroundColor: (store) => store.gColors.backgroundColor,
       iconColor: (store) => store.gColors.iconColor,
       topBarColor: (store) => store.gColors.topBarColor,

@@ -8,7 +8,7 @@ import axios from "axios";
 export const pinia = createPinia();
 pinia.use(piniaPluginPersistedstate);
 
-export const dreamStore = defineStore("dreams", {
+export const useDreamStore = defineStore("dreams", {
   state: () => ({
     limit: 40,
     dreams: [] as Dream[],

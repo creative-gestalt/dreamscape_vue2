@@ -8,7 +8,7 @@ import axios from "axios";
 export const pinia = createPinia();
 pinia.use(piniaPluginPersistedstate);
 
-export const mainStore = defineStore("main", {
+export const useMainStore = defineStore("main", {
   state: () => ({
     settings: {
       colors: {

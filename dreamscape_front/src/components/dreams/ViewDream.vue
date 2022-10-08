@@ -210,8 +210,8 @@
 import Vue from "vue";
 import { Dream, SubDream } from "@/interfaces/dream.interface";
 import { mapState, mapStores } from "pinia";
-import { mainStore } from "@/stores/main";
-import { dreamStore } from "@/stores/dreams";
+import { useMainStore } from "@/stores/main";
+import { useDreamStore } from "@/stores/dreams";
 
 export default Vue.extend({
   name: "ViewDream",
@@ -310,9 +310,9 @@ export default Vue.extend({
     },
   },
   computed: {
-    ...mapStores(mainStore, dreamStore),
-    ...mapState(mainStore, ["gDate", "gColors"]),
-    ...mapState(dreamStore, ["gDreams", "gDreamsCount"]),
+    ...mapStores(useMainStore, useDreamStore),
+    ...mapState(useMainStore, ["gDate", "gColors"]),
+    ...mapState(useDreamStore, ["gDreams", "gDreamsCount"]),
     isIOS(): boolean {
       // return true;
       return this.fullscreenBuffer === 80;
