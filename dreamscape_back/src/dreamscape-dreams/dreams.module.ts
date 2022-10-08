@@ -7,12 +7,7 @@ import { DreamsService } from './dreams.service';
 @Module({
   imports: [
     MongooseModule.forFeature([
-      { name: 'Dreams-Nick', schema: DreamsSchema, collection: 'dreams-nick' },
-      {
-        name: 'Dreams-Lydia',
-        schema: DreamsSchema,
-        collection: 'dreams-lydia',
-      },
+      { name: 'Dreams', schema: DreamsSchema, collection: 'dreams' },
     ]),
   ],
   controllers: [DreamController],
