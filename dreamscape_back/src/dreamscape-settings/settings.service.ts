@@ -11,7 +11,7 @@ export class SettingsService {
   ) {}
 
   async getSettings(): Promise<any> {
-    return this.settingsModel.findOne().exec();
+    return this.settingsModel.find().exec();
   }
 
   async updateSettings(
