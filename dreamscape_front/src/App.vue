@@ -140,7 +140,16 @@ export default Vue.extend({
     },
     fullscreenBuffer(): number {
       // return 80;
-      return navigator.platform.match(/iPhone|iPod|iPad/) ? 80 : 56;
+      if (navigator.userAgent.toLowerCase().match(/iPhone|iPod|iPad/)) {
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        if (navigator.standalone === true) {
+          return 80;
+        }
+        return 56;
+      } else {
+        return 56;
+      }
     },
     paddingClass(): string {
       return this.isIOS ? "pb-8" : "";
