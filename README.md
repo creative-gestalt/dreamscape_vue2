@@ -57,15 +57,15 @@ _root dir_
 ~/dreamscape$ docker compose up -d --build
 ```
 
+- _this can take some time so be patient while it builds_
+- _docker will cache portions of the build, making subsequent builds faster after the first build_
+
 ### That's it. For any tweaking or data management, continue.
 
 ## Updating
 
 If you change any `.env` variables, be sure to run `$ docker compose up -d --build`to force copying files into the
 production containers.
-
-- _this can take some time so be patient while it builds_
-- _docker will cache portions of the build, making subsequent builds faster after the first build_
 
 ## Database
 
