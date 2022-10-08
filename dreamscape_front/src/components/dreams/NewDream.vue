@@ -174,6 +174,11 @@ import { useDreamStore } from "@/stores/dreams";
 export default Vue.extend({
   name: "NewDream",
   created() {
+    // let result = [];
+    // for (const i in navigator) {
+    //   result.push(i + "\n");
+    // }
+    // this.dream = navigator.userAgent.toString();
     this.date = this.max = this.gDate().slice(0, 10);
   },
   data: () => ({
