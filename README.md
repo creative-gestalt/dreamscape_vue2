@@ -37,7 +37,7 @@ SERVER_PORT=3000
 # Database
 DB_ROOT_USER=root
 DB_ROOT_PWD=root
-DB_USER=dreamscape_user
+DB_USER=dreamscape_usr
 DB_PWD=dreamscape_pwd
 INIT_DB=dreamscape_db
 DB_PORT=27017
@@ -67,7 +67,7 @@ Connect via MongoDB Compass by placing the following values into the connection 
 mongodb://{DB_USER}:{DB_PWD}@{SERVER_HOST}:{DB_PORT}/{INIT_DB}
 ```
 
-ex: `mongodb://dreamscape_user:dreamscape_pwd@192.168.0.105:27017/dreamscape_db`
+ex: `mongodb://dreamscape_usr:dreamscape_pwd@192.168.0.105:27017/dreamscape_db`
 
 <br />If you want to view all collections, use the root user / pwd without a collection specified:
 
@@ -76,3 +76,18 @@ mongodb://{DB_ROOT_USER}:{DB_ROOT_PWD}@{SERVER_HOST}:{DB_PORT}/
 ```
 
 ex: `mongodb://root:root@192.168.0.105:27017/`
+
+## Backup & Restore
+### Backup
+If you want to run a cron to maintain backups or just want to run it via command:
+```
+mongodump --uri="mongodb://{DB_USER}:{DB_PWD}@{SERVER_HOST}:{DB_PORT}" --db={INIT_DB} --out=/home/<you>/db/
+```
+ex: `mongodump --uri="mongodb://dreamscape_usr:dreamscape_pwd@192.168.0.105:27017" --db=dreamscape_db --out=/home/nick/db/`
+
+### Restore
+```
+mongorestore --host={SERVER_HOST} --port={DB_PORT} --username={DB_USER} --password={DB_PWD} --authenticationDatabase={INIT_DB} /path/to/any-dir/
+```
+ex: `mongorestore --host=192.168.0.105 --port=27017 --username=dreamscape_usr --password=dreamscape_pwd --authenticationDatabase=dreamscape_db /home/nick/db/`
+
