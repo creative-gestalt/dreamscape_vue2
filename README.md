@@ -8,10 +8,17 @@ _prerequisites:_
 
 You can run this on windows docker or linux. Linux is preferred.
 
+_Linux_
 ```bash
-$ git clone <this-repo>
-$ cd dreamscape/
-$ touch .env
+~$ git clone <this-repo>
+~$ cd dreamscape/
+~/dreamscape$ touch .env
+```
+
+_Windows_
+```
+PS C:\Users\<you>\projects> git clone <this-repo>
+PS C:\Users\<you>\projects\dreamscape> New-Item .env
 ```
 
 ## Environment
