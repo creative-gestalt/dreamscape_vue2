@@ -16,6 +16,7 @@
             v-model="settings.colors.topBarColor"
             width=""
             :swatches-max-height="isMobile ? 200 : 175"
+            @update:color="updateColors"
             show-swatches
             hide-canvas
             hide-sliders
@@ -36,6 +37,7 @@
             v-model="settings.colors.backgroundColor"
             width=""
             :swatches-max-height="isMobile ? 200 : 175"
+            @update:color="updateColors"
             show-swatches
             hide-canvas
             hide-sliders
@@ -56,6 +58,7 @@
             v-model="settings.colors.iconColor"
             width=""
             :swatches-max-height="isMobile ? 200 : 175"
+            @update:color="updateColors"
             show-swatches
             hide-canvas
             hide-sliders
@@ -76,6 +79,7 @@
             v-model="settings.colors.textColor"
             width=""
             :swatches-max-height="isMobile ? 200 : 175"
+            @update:color="updateColors"
             show-swatches
             hide-canvas
             hide-sliders
@@ -96,6 +100,7 @@
             v-model="settings.colors.completeBtnColor"
             width=""
             :swatches-max-height="isMobile ? 200 : 175"
+            @update:color="updateColors"
             show-swatches
             hide-canvas
             hide-sliders
@@ -129,7 +134,10 @@ export default Vue.extend({
   }),
   methods: {
     async reset(): Promise<void> {
-      await this.mainStore.reset(this.settings);
+      await this.mainStore.reset();
+    },
+    updateColors(): void {
+      this.mainStore.updateSettings();
     },
   },
   computed: {
@@ -140,14 +148,6 @@ export default Vue.extend({
     },
     isMobile(): boolean {
       return this.$vuetify.breakpoint.name === "xs";
-    },
-  },
-  watch: {
-    settings: {
-      async handler(value: Settings): Promise<void> {
-        await this.mainStore.updateSettings(value);
-      },
-      deep: true,
     },
   },
 });

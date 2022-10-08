@@ -1,11 +1,7 @@
-import piniaPluginPersistedstate from "pinia-plugin-persistedstate";
-import { createPinia, defineStore } from "pinia";
+import { defineStore } from "pinia";
 import { Session } from "@/interfaces/session.interface";
 import { server } from "@/utils/server";
 import axios from "axios";
-
-export const pinia = createPinia();
-pinia.use(piniaPluginPersistedstate);
 
 export const useSessionStore = defineStore("sessions", {
   state: () => ({

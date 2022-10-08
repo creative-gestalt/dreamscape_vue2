@@ -11,7 +11,7 @@ export class SettingsService {
   ) {}
 
   async getSettings(): Promise<any> {
-    return this.settingsModel.find().exec();
+    return this.settingsModel.findOne().exec();
   }
 
   async updateSettings(
@@ -25,7 +25,7 @@ export class SettingsService {
 
   async createSettings(
     updateSettingsDto: UpdateSettingsDto,
-  ): Promise<HydratedDocument<Settings>[]> {
-    return await this.settingsModel.insertMany(updateSettingsDto);
+  ): Promise<HydratedDocument<Settings>> {
+    return await this.settingsModel.create(updateSettingsDto);
   }
 }

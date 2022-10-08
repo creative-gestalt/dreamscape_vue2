@@ -2,18 +2,11 @@ import Vue from "vue";
 import App from "./App.vue";
 import router from "./router";
 import vuetify from "./plugins/vuetify";
-import vueCompositionApi from "@vue/composition-api";
+import { pinia } from "./plugins/pinia";
 import { alphaToHex } from "@/utils/constants";
-import { createPinia, PiniaVuePlugin } from "pinia";
-import piniaPluginPersistedstate from "pinia-plugin-persistedstate";
 
 Vue.config.productionTip = false;
 document.title = "Dreamscape";
-
-Vue.use(vueCompositionApi);
-Vue.use(PiniaVuePlugin);
-const pinia = createPinia();
-pinia.use(piniaPluginPersistedstate);
 
 Vue.filter(
   "truncate",

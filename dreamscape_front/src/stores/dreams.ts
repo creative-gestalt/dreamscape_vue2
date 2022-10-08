@@ -1,12 +1,8 @@
-import piniaPluginPersistedstate from "pinia-plugin-persistedstate";
-import { createPinia, defineStore } from "pinia";
+import { defineStore } from "pinia";
 import { Pagination } from "@/interfaces/state.interface";
 import { Dream } from "@/interfaces/dream.interface";
 import { server } from "@/utils/server";
 import axios from "axios";
-
-export const pinia = createPinia();
-pinia.use(piniaPluginPersistedstate);
 
 export const useDreamStore = defineStore("dreams", {
   state: () => ({

@@ -1,12 +1,8 @@
-import piniaPluginPersistedstate from "pinia-plugin-persistedstate";
-import { createPinia, defineStore } from "pinia";
+import { defineStore } from "pinia";
 import { Colors, Settings } from "@/interfaces/settings.interface";
 import { sleep } from "@/utils/constants";
 import { server } from "@/utils/server";
 import axios from "axios";
-
-export const pinia = createPinia();
-pinia.use(piniaPluginPersistedstate);
 
 export const useMainStore = defineStore("main", {
   state: () => ({
@@ -33,7 +29,7 @@ export const useMainStore = defineStore("main", {
     gLoading: (state): boolean => state.loading,
   },
   actions: {
-    async reset(payload: Settings): Promise<void> {
+    async reset(): Promise<void> {
       this.settings = {
         _id: this.settings._id,
         colors: {
@@ -45,7 +41,7 @@ export const useMainStore = defineStore("main", {
         },
       };
       await axios.put(
-        `${server.baseURL}/updateSettings/${payload._id}`,
+        `${server.baseURL}/updateSettings/${this.settings._id}`,
         this.settings
       );
     },
@@ -53,18 +49,18 @@ export const useMainStore = defineStore("main", {
       const settings = (await axios.get(`${server.baseURL}/getSettings`)).data;
       if (settings) this.settings = settings;
     },
-    async updateSettings(payload: Settings): Promise<void> {
-      if (!payload._id) {
+    async updateSettings(): Promise<void> {
+      if (!this.settings._id) {
         this.settings = (
-          await axios.post(`${server.baseURL}/createSettings`, payload)
-        ).data[0];
+          await axios.post(`${server.baseURL}/createSettings`, this.settings)
+        ).data;
       } else {
         this.settings = (
           await axios.put(
-            `${server.baseURL}/updateSettings/${payload._id}`,
-            payload
+            `${server.baseURL}/updateSettings/${this.settings._id}`,
+            this.settings
           )
-        ).data[0];
+        ).data;
       }
     },
     async updateLoading(payload: boolean): Promise<void> {

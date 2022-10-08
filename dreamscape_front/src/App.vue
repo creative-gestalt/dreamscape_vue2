@@ -51,28 +51,47 @@
       :min-height="fullscreenBuffer"
       grow
       shift
-      light
       app
     >
-      <v-btn :class="paddingClass" to="/dreams">
+      <v-btn
+        :class="paddingClass"
+        :height="fullscreenBuffer"
+        :color="gColors.topBarColor"
+        to="/dreams"
+      >
         <span :class="marginClass" :style="{ color: gColors.iconColor }">
           Dreams
         </span>
         <v-icon :color="gColors.iconColor">mdi-sleep</v-icon>
       </v-btn>
-      <v-btn :class="paddingClass" to="/sessions">
+      <v-btn
+        :class="paddingClass"
+        :height="fullscreenBuffer"
+        :color="gColors.topBarColor"
+        to="/sessions"
+      >
         <span :class="marginClass" :style="{ color: gColors.iconColor }">
           Sessions
         </span>
         <v-icon :color="gColors.iconColor"> mdi-notebook </v-icon>
       </v-btn>
-      <v-btn :class="paddingClass" to="/dream-overview">
+      <v-btn
+        :class="paddingClass"
+        :height="fullscreenBuffer"
+        :color="gColors.topBarColor"
+        to="/dream-overview"
+      >
         <span :class="marginClass" :style="{ color: gColors.iconColor }">
           Overview
         </span>
         <v-icon :color="gColors.iconColor"> mdi-calendar </v-icon>
       </v-btn>
-      <v-btn :class="paddingClass" to="/settings">
+      <v-btn
+        :class="paddingClass"
+        :height="fullscreenBuffer"
+        :color="gColors.topBarColor"
+        to="/settings"
+      >
         <span :class="marginClass" :style="{ color: gColors.iconColor }">
           Settings
         </span>
@@ -84,10 +103,10 @@
 
 <script lang="ts">
 import Vue from "vue";
+import { useMainStore } from "@/stores/main";
 import { useDreamStore } from "@/stores/dreams";
 import { useSessionStore } from "@/stores/sessions";
 import { mapActions, mapState } from "pinia";
-import { useMainStore } from "@/stores/main";
 
 export default Vue.extend({
   name: "App",
@@ -109,11 +128,11 @@ export default Vue.extend({
   }),
   methods: {
     ...mapActions(useMainStore, ["getSettings"]),
-    ...mapActions(useDreamStore, ["getDreamDates"]),
+    ...mapActions(useDreamStore, ["getDreamsForPage", "getDreamDates"]),
     ...mapActions(useSessionStore, ["getAllSessions"]),
   },
   computed: {
-    ...mapState(useMainStore, ["gColors", "gLoading"]),
+    ...mapState(useMainStore, ["gLoading", "gColors"]),
     isMobile(): boolean {
       return this.$vuetify.breakpoint.name === "xs";
     },
