@@ -9,3 +9,8 @@ export interface SubDream {
   subDream: string;
   time: string;
 }
+
+export interface DreamDate {
+  _id?: string;
+  date: string;
+}

@@ -1,6 +1,6 @@
 import { defineStore } from "pinia";
 import { Pagination } from "@/interfaces/state.interface";
-import { Dream } from "@/interfaces/dream.interface";
+import { Dream, DreamDate } from "@/interfaces/dream.interface";
 import { server } from "@/utils/server";
 import axios from "axios";
 
@@ -8,18 +8,22 @@ export const useDreamStore = defineStore("dreams", {
   state: () => ({
     limit: 40,
     dreams: [] as Dream[],
-    dates: [] as string[],
+    dates: [] as DreamDate[],
     dreamsCount: 0,
     currentTab: 0,
   }),
   getters: {
     gDreams: (state): Dream[] => state.dreams,
     gDreamsCount: (state): number => state.dreamsCount,
-    gDreamDates: (state): string[] => state.dates,
+    gDreamDates: (state): DreamDate[] => state.dates,
     gCurrentTab: (state): number => state.currentTab,
     gYears: (state): string[] => {
       return [
-        ...new Set([...state.dates].map((date: string) => date.slice(0, 4))),
+        ...new Set(
+          [...state.dates].map((dreamDate: DreamDate) =>
+            dreamDate.date.slice(0, 4)
+          )
+        ),
       ]
         .sort()
         .reverse();

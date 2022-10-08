@@ -46,7 +46,7 @@
               ></v-date-picker>
             </v-menu>
           </v-col>
-          <v-col cols="4" class="d-flex justify-center">
+          <v-col cols="4" class="d-flex justify-end">
             <v-fade-transition>
               <v-btn v-if="edit" class="mr-3" @click="edit = false" icon>
                 <v-icon color="orange"> mdi-window-close </v-icon>
@@ -301,12 +301,15 @@ export default Vue.extend({
       });
     },
     async deleteDream(): Promise<void> {
-      await this.dreamsStore.deleteDreams([this.dream]);
-      await this.dreamsStore.getDreamsForPage({
-        skip: 0,
-        limit: 13,
-      });
-      await this.$router.push("/dreams");
+      const answer = confirm("Are you sure?");
+      if (answer) {
+        await this.dreamsStore.deleteDreams([this.dream]);
+        await this.dreamsStore.getDreamsForPage({
+          skip: 0,
+          limit: 13,
+        });
+        await this.$router.push("/dreams");
+      }
     },
   },
   computed: {

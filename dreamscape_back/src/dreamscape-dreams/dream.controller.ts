@@ -54,7 +54,12 @@ export class DreamController {
   @Get('getDreamDates')
   async getDreamDates(@Res() res) {
     const dreams = await this.dreamsService.getAllDreams();
-    const dates = dreams.map((dream) => dream.date);
+    const dates = dreams.map((dream) => {
+      return {
+        _id: dream._id,
+        date: dream.date,
+      };
+    });
     return res.status(HttpStatus.OK).json(dates);
   }
 

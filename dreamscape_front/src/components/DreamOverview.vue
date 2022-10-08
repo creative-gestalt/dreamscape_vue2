@@ -26,10 +26,11 @@
           </h3>
           <v-calendar
             ref="calendar[month]"
-            v-model="value"
             :style="{ backgroundColor: gColors.topBarColor }"
             :start="month"
             :events="events"
+            :color="gColors.completeBtnColor"
+            @click:event="openDreamView"
             :event-color="gColors.completeBtnColor"
             :event-overlap-mode="mode"
             :event-overlap-threshold="30"
@@ -44,18 +45,21 @@
 import Vue from "vue";
 import { useMainStore } from "@/stores/main";
 import { useDreamStore } from "@/stores/dreams";
-import { mapState, mapStores } from "pinia";
+import { mapState } from "pinia";
+import { DreamDate } from "@/interfaces/dream.interface";
+import { CalendarEvent } from "vuetify";
 
 export default Vue.extend({
   name: "DreamOverview",
   async created(): Promise<void> {
     this.cols = this.isMobile ? 12 : 6;
-    this.year = this.mainStore.gDate().slice(0, 4);
-    this.dreamsStore.gDreamDates.forEach((date: string) => {
+    this.year = this.gDate().slice(0, 4);
+    this.gDreamDates.forEach((dreamDate: DreamDate) => {
       this.events.push({
+        id: dreamDate._id,
         name: "",
-        start: date,
-        end: date,
+        start: dreamDate.date,
+        end: dreamDate.date,
         timed: false,
       });
     });
@@ -69,6 +73,9 @@ export default Vue.extend({
     year: "",
   }),
   methods: {
+    openDreamView(event: CalendarEvent): void {
+      this.$router.push(`/dream/${event.event.id}`);
+    },
     getMonthName(dateVal: string) {
       const date = new Date(dateVal);
       if (date.toString() !== "Invalid Date")
@@ -77,9 +84,8 @@ export default Vue.extend({
     },
   },
   computed: {
-    ...mapStores(useMainStore, useDreamStore),
-    ...mapState(useMainStore, ["gColors"]),
-    ...mapState(useDreamStore, ["gYears"]),
+    ...mapState(useMainStore, ["gColors", "gDate"]),
+    ...mapState(useDreamStore, ["gDreamDates", "gYears"]),
     isMobile(): boolean {
       return this.$vuetify.breakpoint.name === "xs";
     },
