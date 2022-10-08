@@ -136,7 +136,7 @@ export default Vue.extend({
     ...mapStores(mainStore, sessionStore),
     ...mapState(mainStore, ["gColors"]),
     settings(): Settings {
-      return this.mainStore.gSettings;
+      return this.mainStore.settings;
     },
     isMobile(): boolean {
       return this.$vuetify.breakpoint.name === "xs";

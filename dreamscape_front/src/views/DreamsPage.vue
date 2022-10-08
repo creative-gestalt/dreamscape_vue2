@@ -43,7 +43,7 @@ export default Vue.extend({
   name: "DreamsPage",
   created(): void {
     setTimeout(() => (this.show = true), 100);
-    this.selectedTab = this.dreamsStore.gCurrentTab;
+    this.selectedTab = this.dreamsStore.currentTab;
   },
   data: () => ({
     show: false,
@@ -69,7 +69,7 @@ export default Vue.extend({
     },
     compTab: {
       get(): number {
-        return this.dreamsStore.gCurrentTab;
+        return this.dreamsStore.currentTab;
       },
       set(newVal: number): number {
         return newVal;

@@ -137,7 +137,7 @@ export default Vue.extend({
       },
     },
     compPages(): number {
-      return Math.ceil(this.dreamsStore.gDreamsCount / this.itemsPerPage);
+      return Math.ceil(this.dreamsStore.dreamsCount / this.itemsPerPage);
     },
   },
   watch: {
