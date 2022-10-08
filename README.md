@@ -48,7 +48,7 @@ DB_PORT=27017
 _root dir_
 
 ```bash
-$ docker compose up -d --build
+~/dreamscape$ docker compose up -d --build
 ```
 
 ## Updating
