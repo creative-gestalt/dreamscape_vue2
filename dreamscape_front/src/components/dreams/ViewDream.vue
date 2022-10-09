@@ -3,7 +3,6 @@
     <v-btn
       v-if="edit"
       @click="addSubDream"
-      :style="{ marginBottom: isIOS ? '80px' : '50px' }"
       :color="gColors.completeBtnColor"
       light
       fixed
@@ -316,13 +315,6 @@ export default Vue.extend({
     ...mapStores(useMainStore, useDreamStore),
     ...mapState(useMainStore, ["gDate", "gColors"]),
     ...mapState(useDreamStore, ["gDreams", "gDreamsCount"]),
-    isIOS(): boolean {
-      // return true;
-      return this.fullscreenBuffer === 80;
-    },
-    fullscreenBuffer(): number {
-      return navigator.platform.match(/iPhone|iPod|iPad/) ? 80 : 56;
-    },
     computedDate(): string {
       return this.dream.date
         ? new Date(this.dream.date + this.dreamTime).toLocaleString("en-US", {
