@@ -1,114 +1,40 @@
 <template>
   <v-container>
-    <div>
-      <v-row>
-        <v-col cols="12">
-          <div class="pb-2" :style="{ color: gColors.textColor }">
-            App Bars & Card Color
-            <v-badge
-              class="ml-3 float-right"
-              :color="settings.colors.topBarColor"
-              bordered
-              inline
-            ></v-badge>
-          </div>
-          <v-color-picker
-            v-model="settings.colors.topBarColor"
-            width=""
-            :swatches-max-height="isMobile ? 200 : 175"
-            @update:color="updateColors"
-            show-swatches
-            hide-canvas
-            hide-sliders
-            hide-inputs
-          ></v-color-picker>
-        </v-col>
-        <v-col cols="12">
-          <div class="pb-2" :style="{ color: gColors.textColor }">
-            Background Color
-            <v-badge
-              class="ml-3 float-right"
-              :color="settings.colors.backgroundColor"
-              bordered
-              inline
-            ></v-badge>
-          </div>
-          <v-color-picker
-            v-model="settings.colors.backgroundColor"
-            width=""
-            :swatches-max-height="isMobile ? 200 : 175"
-            @update:color="updateColors"
-            show-swatches
-            hide-canvas
-            hide-sliders
-            hide-inputs
-          ></v-color-picker>
-        </v-col>
-        <v-col cols="12">
-          <div class="pb-2" :style="{ color: gColors.textColor }">
-            Icon Color
-            <v-badge
-              class="ml-3 float-right"
-              :color="settings.colors.iconColor"
-              bordered
-              inline
-            ></v-badge>
-          </div>
-          <v-color-picker
-            v-model="settings.colors.iconColor"
-            width=""
-            :swatches-max-height="isMobile ? 200 : 175"
-            @update:color="updateColors"
-            show-swatches
-            hide-canvas
-            hide-sliders
-            hide-inputs
-          ></v-color-picker>
-        </v-col>
-        <v-col cols="12">
-          <div class="pb-2" :style="{ color: gColors.textColor }">
-            Text Color
-            <v-badge
-              class="ml-3 float-right"
-              :color="settings.colors.textColor"
-              bordered
-              inline
-            ></v-badge>
-          </div>
-          <v-color-picker
-            v-model="settings.colors.textColor"
-            width=""
-            :swatches-max-height="isMobile ? 200 : 175"
-            @update:color="updateColors"
-            show-swatches
-            hide-canvas
-            hide-sliders
-            hide-inputs
-          ></v-color-picker>
-        </v-col>
-        <v-col cols="12">
-          <div class="pb-2" :style="{ color: gColors.textColor }">
-            Complete Button Color
-            <v-badge
-              class="ml-3 float-right"
-              :color="settings.colors.completeBtnColor"
-              bordered
-              inline
-            ></v-badge>
-          </div>
-          <v-color-picker
-            v-model="settings.colors.completeBtnColor"
-            width=""
-            :swatches-max-height="isMobile ? 200 : 175"
-            @update:color="updateColors"
-            show-swatches
-            hide-canvas
-            hide-sliders
-            hide-inputs
-          ></v-color-picker>
-        </v-col>
-      </v-row>
-    </div>
+    <v-card>
+      <v-btn-toggle v-model="selectedColorButton" class="d-flex">
+        <v-btn class="flex-grow-1" value="topBarColor">
+          <v-icon :color="settings.colors.topBarColor">
+            mdi-format-line-weight
+          </v-icon>
+        </v-btn>
+        <v-btn class="flex-grow-1" value="backgroundColor">
+          <v-icon :color="settings.colors.backgroundColor">
+            mdi-application-outline
+          </v-icon>
+        </v-btn>
+        <v-btn class="flex-grow-1" value="iconColor">
+          <v-icon :color="settings.colors.iconColor">mdi-pill</v-icon>
+        </v-btn>
+        <v-btn class="flex-grow-1" value="textColor">
+          <v-icon :color="settings.colors.textColor">mdi-text-shadow</v-icon>
+        </v-btn>
+        <v-btn class="flex-grow-1" value="completeBtnColor">
+          <v-icon :color="settings.colors.completeBtnColor">
+            mdi-gesture-tap
+          </v-icon>
+        </v-btn>
+      </v-btn-toggle>
+      <v-color-picker
+        v-model="settings.colors[selectedColorButton]"
+        width=""
+        :swatches-max-height="isMobile ? 200 : 175"
+        @update:color="updateColors"
+        show-swatches
+        hide-canvas
+        hide-sliders
+        hide-inputs
+      ></v-color-picker>
+    </v-card>
     <v-divider class="mt-5"></v-divider>
     <v-row>
       <v-col>
@@ -130,7 +56,7 @@ import { useSessionStore } from "@/stores/sessions";
 export default Vue.extend({
   name: "SettingsComponent",
   data: () => ({
-    //
+    selectedColorButton: "topBarColor",
   }),
   methods: {
     async reset(): Promise<void> {
