@@ -11,13 +11,9 @@ module.exports = {
     msTileColor: "",
     appleMobileWebAppCapable: "yes",
     appleMobileWebAppStatusBarStyle: "black",
-    icons: [
-      {
-        src: "assets/ga-logo-turple.png",
-        sizes: "192x192",
-        type: "image/png",
-      },
-    ],
+    iconPaths: {
+      msTileImage: "img/icons/ga-logo-1982x192.png",
+    },
 
     // configure the workbox plugin
     workboxPluginMode: "InjectManifest",
