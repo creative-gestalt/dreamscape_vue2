@@ -41,7 +41,6 @@
     <v-bottom-navigation
       v-if="isMobile"
       :background-color="gColors.topBarColor"
-      color="transparent"
       grow
       shift
       app
