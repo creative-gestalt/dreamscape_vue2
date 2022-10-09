@@ -4,17 +4,19 @@ module.exports = {
   devServer: {
     port: 8080,
   },
+
   pwa: {
     name: "Dreamscape",
-    themeColor: "#0000000",
-    msTileColor: "#0000000",
+    themeColor: "#00000000",
+    msTileColor: "#000000",
     appleMobileWebAppCapable: "yes",
-    appleMobileWebAppStatusBarStyle: "black",
+    appleMobileWebAppStatusBarStyle: "black-translucent",
+    manifestOptions: {
+      background_color: "#000000",
+    },
 
-    // configure the workbox plugin
     workboxPluginMode: "InjectManifest",
     workboxOptions: {
-      // swSrc is required in InjectManifest mode.
       swSrc: "src/registerServiceWorker.ts",
       // ...other Workbox options...
     },

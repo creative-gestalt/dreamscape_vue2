@@ -26,13 +26,7 @@
       </v-btn-toggle>
       <v-color-picker
         v-model="settings.colors[selectedColorButton]"
-        width=""
-        :swatches-max-height="isMobile ? 200 : 175"
         @update:color="updateColors"
-        show-swatches
-        hide-canvas
-        hide-sliders
-        hide-inputs
       ></v-color-picker>
     </v-card>
     <v-divider class="mt-5"></v-divider>
