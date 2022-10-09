@@ -46,19 +46,35 @@
       shift
       app
     >
-      <v-btn :color="gColors.topBarColor" to="/dreams">
+      <v-btn
+        :height="bottomNavHeight"
+        :color="gColors.topBarColor"
+        to="/dreams"
+      >
         <span :style="{ color: gColors.iconColor }"> Dreams </span>
         <v-icon :color="gColors.iconColor">mdi-sleep</v-icon>
       </v-btn>
-      <v-btn :color="gColors.topBarColor" to="/sessions">
+      <v-btn
+        :height="bottomNavHeight"
+        :color="gColors.topBarColor"
+        to="/sessions"
+      >
         <span :style="{ color: gColors.iconColor }"> Sessions </span>
         <v-icon :color="gColors.iconColor"> mdi-notebook </v-icon>
       </v-btn>
-      <v-btn :color="gColors.topBarColor" to="/dream-overview">
+      <v-btn
+        :height="bottomNavHeight"
+        :color="gColors.topBarColor"
+        to="/dream-overview"
+      >
         <span :style="{ color: gColors.iconColor }"> Overview </span>
         <v-icon :color="gColors.iconColor"> mdi-calendar </v-icon>
       </v-btn>
-      <v-btn :color="gColors.topBarColor" to="/settings">
+      <v-btn
+        :height="bottomNavHeight"
+        :color="gColors.topBarColor"
+        to="/settings"
+      >
         <span :style="{ color: gColors.iconColor }"> Settings </span>
         <v-icon :color="gColors.iconColor"> mdi-cog-outline </v-icon>
       </v-btn>

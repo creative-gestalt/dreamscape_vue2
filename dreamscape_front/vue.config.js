@@ -7,8 +7,8 @@ module.exports = {
   pwa: {
     name: "Dreamscape",
     startUrl: "index.html",
-    themeColor: "transparent",
-    msTileColor: "#000000",
+    themeColor: "",
+    msTileColor: "",
     appleMobileWebAppCapable: "yes",
     appleMobileWebAppStatusBarStyle: "black",
     icons: [
