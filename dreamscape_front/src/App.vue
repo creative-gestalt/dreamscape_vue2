@@ -1,19 +1,13 @@
 <template>
   <v-app id="app" :style="{ background: gColors.backgroundColor }">
-    <v-app-bar :color="gColors.topBarColor" :height="isIOS ? 90 : 56" dark app>
+    <v-app-bar :color="gColors.topBarColor" dark app>
       <div class="d-flex align-center pr-5">
-        <v-img
-          class="ml-3"
-          :style="isIOS ? 'transform: translateY(20px)' : ''"
-          width="35"
-          src="@/assets/ga-logo-black.png"
-        ></v-img>
+        <v-img class="ml-3" width="35" src="@/assets/ga-logo-black.png"></v-img>
       </div>
       <v-app-bar-title
         class="text-no-wrap"
         :style="{
           color: gColors.iconColor,
-          transform: isIOS ? 'translateY(20px)' : '',
         }"
       >
         {{ $route.meta.title }}
@@ -48,53 +42,24 @@
       v-if="isMobile"
       :background-color="gColors.topBarColor"
       color="transparent"
-      :min-height="fullscreenBuffer"
       grow
       shift
       app
     >
-      <v-btn
-        :class="paddingClass"
-        :height="fullscreenBuffer"
-        :color="gColors.topBarColor"
-        to="/dreams"
-      >
-        <span :class="marginClass" :style="{ color: gColors.iconColor }">
-          Dreams
-        </span>
+      <v-btn :color="gColors.topBarColor" to="/dreams">
+        <span :style="{ color: gColors.iconColor }"> Dreams </span>
         <v-icon :color="gColors.iconColor">mdi-sleep</v-icon>
       </v-btn>
-      <v-btn
-        :class="paddingClass"
-        :height="fullscreenBuffer"
-        :color="gColors.topBarColor"
-        to="/sessions"
-      >
-        <span :class="marginClass" :style="{ color: gColors.iconColor }">
-          Sessions
-        </span>
+      <v-btn :color="gColors.topBarColor" to="/sessions">
+        <span :style="{ color: gColors.iconColor }"> Sessions </span>
         <v-icon :color="gColors.iconColor"> mdi-notebook </v-icon>
       </v-btn>
-      <v-btn
-        :class="paddingClass"
-        :height="fullscreenBuffer"
-        :color="gColors.topBarColor"
-        to="/dream-overview"
-      >
-        <span :class="marginClass" :style="{ color: gColors.iconColor }">
-          Overview
-        </span>
+      <v-btn :color="gColors.topBarColor" to="/dream-overview">
+        <span :style="{ color: gColors.iconColor }"> Overview </span>
         <v-icon :color="gColors.iconColor"> mdi-calendar </v-icon>
       </v-btn>
-      <v-btn
-        :class="paddingClass"
-        :height="fullscreenBuffer"
-        :color="gColors.topBarColor"
-        to="/settings"
-      >
-        <span :class="marginClass" :style="{ color: gColors.iconColor }">
-          Settings
-        </span>
+      <v-btn :color="gColors.topBarColor" to="/settings">
+        <span :style="{ color: gColors.iconColor }"> Settings </span>
         <v-icon :color="gColors.iconColor"> mdi-cog-outline </v-icon>
       </v-btn>
     </v-bottom-navigation>
@@ -133,20 +98,6 @@ export default Vue.extend({
     ...mapState(useMainStore, ["gLoading", "gColors"]),
     isMobile(): boolean {
       return this.$vuetify.breakpoint.name === "xs";
-    },
-    isIOS(): boolean {
-      // return true;
-      return this.fullscreenBuffer === 80;
-    },
-    fullscreenBuffer(): number {
-      // return 80;
-      return navigator.userAgent.toLowerCase().indexOf("iphone") > -1 ? 80 : 56;
-    },
-    paddingClass(): string {
-      return this.isIOS ? "pb-8" : "";
-    },
-    marginClass(): string {
-      return this.isIOS ? "mt-n3" : "";
     },
   },
 });
