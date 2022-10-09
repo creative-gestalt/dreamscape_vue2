@@ -5,19 +5,9 @@ module.exports = {
     port: 8080,
   },
   pwa: {
-    manifestOptions: {
-      name: "Dreamscape",
-      icons: [
-        {
-          src: "img/icons/ga-logo-1982x192.png",
-          sizes: "192x192",
-          type: "image/png",
-        },
-      ],
-    },
     name: "Dreamscape",
-    themeColor: "",
-    msTileColor: "",
+    // themeColor: "",
+    // msTileColor: "",
     appleMobileWebAppCapable: "yes",
     appleMobileWebAppStatusBarStyle: "black-translucent",
 
