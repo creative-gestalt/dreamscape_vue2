@@ -6,11 +6,18 @@ module.exports = {
   },
   pwa: {
     name: "Dreamscape",
-    start_url: "index.html",
-    // themeColor: "#4DBA87",
-    // msTileColor: "#000000",
+    startUrl: "index.html",
+    themeColor: "#4DBA87",
+    msTileColor: "#000000",
     appleMobileWebAppCapable: "yes",
     appleMobileWebAppStatusBarStyle: "black",
+    icons: [
+      {
+        src: "assets/ga-logo-turple.png",
+        sizes: "192x192",
+        type: "image/png",
+      },
+    ],
 
     // configure the workbox plugin
     workboxPluginMode: "InjectManifest",
